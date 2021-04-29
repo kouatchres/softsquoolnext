@@ -5,10 +5,7 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
-    "lib": [
-      "es6",
-      "dom"
-    ],
+    "lib": ["es6", "dom"],
     "noImplicitAny": true,
     "noImplicitThis": true,
     "strictNullChecks": true,
@@ -21,12 +18,10 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,
-  "noImplicitReturns": true,
+    "baseUrl": "pages/components",
+    "noImplicitReturns": true,
     "target": "esnext",
-    "typeRoots": [
-      "node_modules/@types",
-      "types"
-    ],
+    "typeRoots": ["node_modules/@types", "types"],
     "rootDir": ".",
     "plugins": [
       {
@@ -35,13 +30,7 @@
     ],
     "jsx": "preserve"
   },
-  "exclude": [
-    "node_modules"
-  ],
-  "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    ".",
-    "types.d.ts"
-  ]
+
+  "exclude": ["node_modules"],
+  "include": ["**/*.ts", "**/*.tsx", ".", "types.d.ts", "pages/components"]
 }

@@ -651,7 +651,7 @@ Now, you can go back to `components/AllUsers.tsx`, and replace the manually writ
 
 ```tsx
 import React from 'react';
-import { useAllUsersQuery } from '../generated/graphql';
+import { useAllUsersQuery } from '../../../generated/graphql';
 
 const AllUsers: React.FC = () => {
   const [result] = useAllUsersQuery();

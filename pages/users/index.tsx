@@ -1,8 +1,8 @@
 import { GetStaticProps } from 'next';
 import Link from 'next/link';
-import Layout from '../../components/Layout';
-import List from '../../components/List';
-import { User } from '../../interfaces';
+import Layout from 'Layout';
+import List from 'List';
+import { User } from '../../src/components/interfaces';
 import { sampleUserData } from '../../utils/sample-data';
 
 type Props = {

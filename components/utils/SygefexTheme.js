@@ -92,8 +92,8 @@ const SygefexTheme = createMuiTheme({
 
     MuiToolbar: {
       regular: {
-        minHeight: '1.5rem',
-        maxHeight: '1.9rem'
+        minHeight: '0.9rem',
+        maxHeight: '1.2rem'
       }
     },
 
@@ -266,15 +266,13 @@ const SygefexTheme = createMuiTheme({
     },
 
     MuiPaper: {
-      root: {
-        margin: 'auto',
-        paddingLeft: theme.spacing(1.7),
-        paddingRight: theme.spacing(1.7),
-        paddingTop: theme.spacing(1)
-      },
+      // root: {
+
+      // },
       rounded: {
         elevation: 5,
-        borderRadius: '0.4rem'
+        borderRadius: '0.4rem',
+        margin: 'auto'
       }
     },
     MuiRadio: {
@@ -332,6 +330,8 @@ const SygefexTheme = createMuiTheme({
     MuiFormHelperText: {
       root: {
         color: orange[900],
+        fontSize: '0.45rem',
+        fontWeight: 200,
         '&$error': {
           '&.MuiFormHelperText-root.Mui-error': {
             color: '#e65100'
