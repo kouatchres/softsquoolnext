@@ -1,0 +1,5 @@
+fragment ClassroomFragment on Classroom {
+  id
+  className
+  classCode
+}

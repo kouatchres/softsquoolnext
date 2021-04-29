@@ -1,0 +1,10 @@
+
+
+#import from "../fragments/SchoolYearFragment.gql"
+
+mutation createSchoolYear($data: SchoolYearCreateInput!) {
+  createOneSchoolYear(data: $data) {
+    ...SchoolYearFragment
+  }
+}
+ 

@@ -1,0 +1,10 @@
+
+
+#import from "../fragments/UserFragment.gql"
+
+mutation createUser($data: UserCreateInput!) {
+  createOneUser(data: $data) {
+    ...UserFragment
+  }
+}
+  

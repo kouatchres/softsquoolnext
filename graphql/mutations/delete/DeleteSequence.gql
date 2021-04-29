@@ -1,0 +1,9 @@
+#import from '../fragments/SequenceFragment.gql'
+
+
+mutation deleteSequence($id: String!) {
+  deleteOneSequence(where:{id: $id}) {
+    id
+  }
+}
+  

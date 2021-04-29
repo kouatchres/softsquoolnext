@@ -1,0 +1,10 @@
+
+
+#import from "../fragments/ScoreFragment.gql"
+
+mutation createScore($data: ScoreCreateInput!) {
+  createOneScore(data: $data) {
+    ...ScoreFragment
+  }
+}
+ 

@@ -1,0 +1,14 @@
+fragment StudentFragment on Student {
+  id
+  student1stName
+  student2ndName
+  student3rdName
+  gender
+  studentMatricule
+  studentSecretCode
+  dateOfBirth
+  placeOfBirth
+  email
+  phoneNumber
+  image
+}

@@ -1,0 +1,10 @@
+#import from "../fragments/TermFragment.gql"
+
+
+  query AllTerms {
+    terms {
+
+      ...TermFragment
+    }
+  }
+

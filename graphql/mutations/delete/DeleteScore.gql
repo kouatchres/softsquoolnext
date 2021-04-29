@@ -1,0 +1,9 @@
+#import from '../fragments/ScoreFragment.gql'
+
+
+mutation deleteScore($id: String!) {
+  deleteOneScore(where:{id: $id}) {
+    id
+  }
+}
+  

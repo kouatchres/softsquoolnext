@@ -1,0 +1,9 @@
+#import from '../fragments/AnnProfSubjDistroFragment.gql'
+
+
+mutation deleteAnnProfSubjDistro($id: String!) {
+  deleteOneAnnProfSubjDistro(where:{id: $id}) {
+    id
+  }
+}
+  

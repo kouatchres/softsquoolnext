@@ -1,0 +1,9 @@
+#import from '../fragments/SchoolYearFragment.gql'
+
+
+mutation deleteSchoolYear($id: String!) {
+  deleteOneSchoolYear(where:{id: $id}) {
+    id
+  }
+}
+  

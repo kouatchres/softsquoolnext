@@ -1,0 +1,10 @@
+
+
+#import from "../fragments/UserFragment.gql"
+
+mutation deleteUser($id: String!) {
+  deleteOneUser(where:{id: $id}) {
+id
+  }
+}
+  

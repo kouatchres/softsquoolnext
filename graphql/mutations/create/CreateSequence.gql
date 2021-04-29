@@ -1,0 +1,10 @@
+
+
+#import from "../fragments/SequenceFragment.gql"
+
+mutation createSequence($data: SequenceCreateInput!) {
+  createOneSequence(data: $data) {
+    ...SequenceFragment
+  }
+}
+ 

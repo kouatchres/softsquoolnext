@@ -1,0 +1,5 @@
+fragment DepartmentFragment on Department {
+  id
+  deptName
+  deptCode
+}

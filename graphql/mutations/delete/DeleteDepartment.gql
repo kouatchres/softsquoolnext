@@ -1,0 +1,9 @@
+#import from '../fragments/DepartmentFragment.gql'
+
+
+mutation deleteDepartment($id: String!) {
+  deleteOneDepartment(where:{id: $id}) {
+    id
+  }
+}
+  

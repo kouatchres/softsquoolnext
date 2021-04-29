@@ -1,0 +1,19 @@
+
+#import from "../fragments/DivisionFragment.gql"
+#import from "../fragments/SubdivisionFragment.gql"
+
+  query AllDivisions {
+    divisions {
+      ...DivisionFragment
+      }
+    }
+
+
+query SingleDivision($id: String!) {
+  division(id: $id ) {
+   ...DivisionFragment
+    subdivisions{
+    ...SubdivisionFragment
+    }
+  }
+}

@@ -1,0 +1,13 @@
+#import from "../fragments/ProfFragment.gql"
+
+query AllProfs {
+  profs {
+    ...ProfFragment
+  }
+}
+
+query SingleProfByMatricule($profMatricule: String!) {
+  profByMatricule(profMatricule: $profMatricule) {
+    ...ProfFragment
+  }
+}

@@ -1,0 +1,98 @@
+datasource db {
+  provider = "postgresql"
+  url = "***"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id    String @id @default(cuid())
+  name  String
+  email String
+  image String
+
+}
+
+model Region {
+  id       String     @id @default(cuid())
+  regName  String
+  regCode  String
+  division Division[]
+
+}
+
+model Division {
+  id           String        @id @default(cuid())
+  divisionName String
+  divisionCode String
+  subdiv       Subdivision[]
+
+  Region   Region? @relation(fields: [regionId], references: [id])
+  regionId String?
+}
+
+model Subdivision {
+  id         String @id @default(cuid())
+  subdivName String
+  subdivCode String
+  town       Town[]
+
+  Division   Division? @relation(fields: [divisionId], references: [id])
+  divisionId String?
+}
+
+model Town {
+  id       String @id @default(cuid())
+  townName String
+  townCode String
+
+  school        School[]
+  Subdivision   Subdivision? @relation(fields: [subdivisionId], references: [id])
+  subdivisionId String?
+}
+
+model School {
+  id           String @id @default(cuid())
+  schoolName   String
+  schoolNumber String
+  schoolCode   String
+
+  section Section[]
+
+  Town   Town?   @relation(fields: [townId], references: [id])
+  townId String?
+}
+
+model Section {
+  id          String @id @default(cuid())
+  sectionName String
+  sectionCode String
+
+  department Department[]
+
+  School   School? @relation(fields: [schoolId], references: [id])
+  schoolId String?
+}
+
+model Department {
+  id        String   @id @default(cuid())
+  deptName  String
+  deptCode  String
+  prof      Prof[]
+  Section   Section? @relation(fields: [sectionId], references: [id])
+  sectionId String?
+}
+
+model Prof {
+  id            String @id @default(cuid())
+  prof1stName   String
+  prof2ndName   String
+  prof3rdName   String
+  profMatricule String
+  specialty     String
+
+  Department   Department? @relation(fields: [departmentId], references: [id])
+  departmentId String?
+}

@@ -1,0 +1,9 @@
+#import from "../fragments/ProfFragment.gql"
+
+
+mutation createProf($data:ProfCreateInput!) {
+    createOneProf(data: $data) {
+     ...ProfFragment
+    }
+  }
+ 

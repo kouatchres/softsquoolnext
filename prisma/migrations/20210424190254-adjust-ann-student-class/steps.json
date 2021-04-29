@@ -1,0 +1,68 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "School",
+          "field": "schoolNumber"
+        },
+        "directive": "unique"
+      }
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Prof",
+          "field": "profSecretCode"
+        },
+        "directive": "unique"
+      }
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Student",
+          "field": "studentSecretCode"
+        },
+        "directive": "unique"
+      }
+    },
+    {
+      "tag": "DeleteField",
+      "model": "AnnStudentClassroom",
+      "field": "student1stName"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "AnnStudentClassroom",
+      "field": "student2ndName"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "AnnStudentClassroom",
+      "field": "student3rdName"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "AnnStudentClassroom",
+      "field": "sex"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "AnnStudentClassroom",
+      "field": "studentMatricule"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "AnnStudentClassroom",
+      "field": "image"
+    }
+  ]
+}

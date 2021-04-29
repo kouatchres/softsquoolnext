@@ -1,0 +1,4 @@
+fragment ScoreFragment on Score {
+  id
+  marks
+}

@@ -1,0 +1,10 @@
+#import from "../fragments/AnnStudentClassroomFragment.gql"
+
+
+  query AllAnnStudentClassroom {
+    annStudentClassroom {
+
+      ...AnnStudentClassroomFragment
+    }
+  }
+

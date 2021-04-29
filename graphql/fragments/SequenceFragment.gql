@@ -1,0 +1,5 @@
+fragment SequenceFragment on Sequence {
+  id
+  seqName
+  seqCode
+}

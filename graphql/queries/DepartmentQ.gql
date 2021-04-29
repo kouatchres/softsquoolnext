@@ -1,0 +1,10 @@
+#import from "../fragments/DepartmentFragment.gql"
+
+
+  query AllDepartments {
+    departments {
+
+      ...DepartmentFragment
+    }
+  }
+

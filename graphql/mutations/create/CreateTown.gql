@@ -1,0 +1,9 @@
+
+#import from "../fragments/TownFragment.gql"
+
+mutation createTown($data: TownCreateInput!) {
+  createOneTown(data: $data) {
+    ...TownFragment
+  }
+}
+ 

@@ -1,0 +1,9 @@
+#import from "../fragments/ProfFragment.gql"
+
+
+mutation deleteProf($id: String!) {
+  deleteOneProf(where:{id: $id} ) {
+    id
+  }
+}
+  

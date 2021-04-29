@@ -1,0 +1,10 @@
+
+
+#import from "../fragments/AnnProfSubjDistroFragment.gql"
+
+mutation createAnnProfSubjDistro($data: AnnProfSubjDistroCreateInput!) {
+  createOneAnnProfSubjDistro(data: $data) {
+    ...AnnProfSubjDistroFragment
+  }
+}
+ 

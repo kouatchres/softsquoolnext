@@ -1,0 +1,9 @@
+#import from '../fragments/AnnProfDeptFragment.gql'
+
+
+mutation deleteAnnProfDept($id: String!) {
+  deleteOneAnnProfDept(where:{id: $id}) {
+    id
+  }
+}
+  

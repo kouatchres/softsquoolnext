@@ -1,0 +1,13 @@
+fragment ProfFragment on Prof {
+  id
+  prof1stName
+  prof2ndName
+  prof3rdName
+  profMatricule
+  profSecretCode
+  gender
+  image
+  email
+  phoneNumber
+  specialty
+}

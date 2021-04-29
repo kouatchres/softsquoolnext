@@ -1,0 +1,8 @@
+#import from '../fragments/DivisionFragment.gql'
+
+mutation deleteDivision($id: String!) {
+  deleteOneDivision(where:{id: $id} ) {
+   id
+  }
+}
+  

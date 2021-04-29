@@ -1,0 +1,125 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "tag": "CreateField",
+      "model": "Region",
+      "field": "division",
+      "type": "Division",
+      "arity": "List"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Division",
+      "field": "town",
+      "type": "Town",
+      "arity": "List"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Division",
+      "field": "Region",
+      "type": "Region",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Division",
+          "field": "Region"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Division",
+          "field": "Region"
+        },
+        "directive": "relation"
+      },
+      "argument": "fields",
+      "value": "[regionId]"
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Division",
+          "field": "Region"
+        },
+        "directive": "relation"
+      },
+      "argument": "references",
+      "value": "[id]"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Division",
+      "field": "regionId",
+      "type": "String",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Town",
+      "field": "Division",
+      "type": "Division",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Town",
+          "field": "Division"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Town",
+          "field": "Division"
+        },
+        "directive": "relation"
+      },
+      "argument": "fields",
+      "value": "[divisionId]"
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Town",
+          "field": "Division"
+        },
+        "directive": "relation"
+      },
+      "argument": "references",
+      "value": "[id]"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Town",
+      "field": "divisionId",
+      "type": "String",
+      "arity": "Optional"
+    }
+  ]
+}

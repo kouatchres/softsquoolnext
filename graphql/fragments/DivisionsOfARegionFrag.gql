@@ -1,0 +1,10 @@
+fragment DivisionsOfARegionFrag on Region {
+  id
+  regName
+  regCode
+  divisions {
+    id
+    divisionName
+    divisionCode
+  }
+}

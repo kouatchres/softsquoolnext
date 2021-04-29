@@ -1,0 +1,8 @@
+#import from "../fragments/SchoolFragment.gql"
+
+mutation createSchool($data: SchoolCreateInput!) {
+  createOneSchool(data: $data) {
+    ...SchoolFragment
+  }
+}
+ 

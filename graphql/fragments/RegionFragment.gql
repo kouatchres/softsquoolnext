@@ -1,0 +1,5 @@
+fragment RegionFragment on Region {
+  id
+  regName
+  regCode
+}

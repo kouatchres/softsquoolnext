@@ -1,0 +1,9 @@
+#import from '../fragments/SubjectFragment.gql'
+
+
+mutation deleteSubject($id: String!) {
+  deleteOneSubject(where:{id: $id}) {
+    id
+  }
+}
+  

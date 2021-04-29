@@ -1,0 +1,5 @@
+fragment SchoolYearFragment on SchoolYear {
+  id
+  yearName
+  yearCode
+}

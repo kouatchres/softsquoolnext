@@ -1,0 +1,10 @@
+
+
+#import from "../fragments/AnnStudentClassroomFragment.gql"
+
+mutation createAnnStudentClassroom($data: AnnStudentClassroomCreateInput!) {
+  createOneAnnStudentClassroom(data: $data) {
+    ...AnnStudentClassroomFragment
+  }
+}
+ 

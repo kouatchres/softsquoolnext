@@ -1,0 +1,10 @@
+
+
+#import from "../fragments/LogbookFragment.gql"
+
+mutation createLogbook($data: LogbookCreateInput!) {
+  createOneLogbook(data: $data) {
+    ...LogbookFragment
+  }
+}
+ 

@@ -1,0 +1,9 @@
+#import from "../fragments/SubdivisionFragment.gql"
+
+
+mutation deleteSubdivision($id: String!) {
+  deleteOneSubdivision(where:{id: $id} ) {
+    id
+  }
+}
+  

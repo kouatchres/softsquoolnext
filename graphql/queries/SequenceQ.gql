@@ -1,0 +1,10 @@
+#import from "../fragments/SequenceFragment.gql"
+
+
+  query AllSequences {
+    sequences {
+
+      ...SequenceFragment
+    }
+  }
+

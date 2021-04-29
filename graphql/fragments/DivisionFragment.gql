@@ -1,0 +1,5 @@
+fragment DivisionFragment on Division {
+  id
+  divisionName
+  divisionCode
+}

@@ -1,0 +1,17 @@
+#import from "../fragments/SectionFragment.gql"
+#import from "../fragments/DepartmentFragment.gql"
+
+query AllSections {
+  sections {
+    ...SectionFragment
+  }
+}
+
+query SingleSection($id: String!) {
+  section(id: $id) {
+    ...SectionFragment
+    departments {
+      ...DepartmentFragment
+    }
+  }
+}

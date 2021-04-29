@@ -1,0 +1,5 @@
+fragment SubdivisionFragment on Subdivision {
+  id
+  subdivName
+  subdivCode
+}

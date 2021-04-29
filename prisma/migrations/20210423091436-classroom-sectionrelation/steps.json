@@ -1,0 +1,76 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "tag": "DeleteDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "School",
+          "field": "schoolNumber"
+        },
+        "directive": "unique"
+      }
+    },
+    {
+      "tag": "CreateField",
+      "model": "Section",
+      "field": "classroom",
+      "type": "Classroom",
+      "arity": "List"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Classroom",
+      "field": "Section",
+      "type": "Section",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Classroom",
+          "field": "Section"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Classroom",
+          "field": "Section"
+        },
+        "directive": "relation"
+      },
+      "argument": "fields",
+      "value": "[sectionId]"
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Classroom",
+          "field": "Section"
+        },
+        "directive": "relation"
+      },
+      "argument": "references",
+      "value": "[id]"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Classroom",
+      "field": "sectionId",
+      "type": "String",
+      "arity": "Required"
+    }
+  ]
+}

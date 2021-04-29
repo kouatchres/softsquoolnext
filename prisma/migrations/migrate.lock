@@ -1,0 +1,23 @@
+# Prisma Migrate lockfile v1
+
+20200608182833-init
+20210322112004-trial
+20210322234434-division_added
+20210322235447-town_added
+20210323001359-relation_for_town
+20210323165653-understood
+20210324031932-progress
+20210324083202-incremental
+20210414124944-local_first
+20210420150814-school_modifications
+20210420155312-modified-unique-school-number-and-secret-code
+20210423091436-classroom-sectionrelation
+20210423130343-adjust_termseq
+20210423132241-adjusted-sequence-score-relations
+20210423135740-included-finance-and-relations-adjusted
+20210423164801-adjusment-of-student
+20210423180409-added-final-fields-on-student
+20210423211753-studdent-correct-spelling-of-secret-code
+20210424135240-prof-modifications
+20210424190254-adjust-ann-student-class
+20210426145756-adjusting-prof-matricule-unique

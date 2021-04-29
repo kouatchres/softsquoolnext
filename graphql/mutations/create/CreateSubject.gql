@@ -1,0 +1,10 @@
+
+
+#import from "../fragments/SubjectFragment.gql"
+
+mutation createSubject($data: SubjectCreateInput!) {
+  createOneSubject(data: $data) {
+    ...SubjectFragment
+  }
+}
+ 

@@ -1,0 +1,5 @@
+fragment TownFragment on Town {
+  id
+  townName
+  townCode
+}

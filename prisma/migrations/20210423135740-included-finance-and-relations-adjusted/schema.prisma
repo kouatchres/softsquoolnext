@@ -1,0 +1,264 @@
+datasource db {
+  provider = "postgresql"
+  url = "***"
+}
+
+generator client {
+  provider = "prisma-client-js"
+  // previewFeatures = ["createMany"]
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  image     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+}
+
+model Region {
+  id        String     @id @default(cuid())
+  regName   String
+  regCode   String
+  division  Division[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @default(now()) @updatedAt
+
+}
+
+model Division {
+  id           String        @id @default(cuid())
+  divisionName String
+  divisionCode String
+  subdiv       Subdivision[]
+
+  Region    Region   @relation(fields: [regionId], references: [id])
+  regionId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+model Subdivision {
+  id         String @id @default(cuid())
+  subdivName String
+  subdivCode String
+  town       Town[]
+
+  Division   Division @relation(fields: [divisionId], references: [id])
+  divisionId String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now()) @updatedAt
+}
+
+model Town {
+  id       String @id @default(cuid())
+  townName String
+  townCode String
+
+  school        School[]
+  Subdivision   Subdivision @relation(fields: [subdivisionId], references: [id])
+  subdivisionId String
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @default(now()) @updatedAt
+}
+
+model School {
+  id               String @id @default(cuid())
+  schoolName       String
+  schoolNumber     Int
+  schoolSecretCode String @unique
+  schoolCode       String
+
+  section Section[]
+
+  Town      Town     @relation(fields: [townId], references: [id])
+  townId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+model Section {
+  id          String @id @default(cuid())
+  sectionName String
+  sectionCode String
+
+  department Department[]
+  classroom  Classroom[]
+
+  School    School   @relation(fields: [schoolId], references: [id])
+  schoolId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+model Department {
+  id          String        @id @default(cuid())
+  deptName    String
+  deptCode    String
+  annProfDept AnnProfDept[]
+  subject     Subject[]
+  Section     Section       @relation(fields: [sectionId], references: [id])
+  sectionId   String
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @default(now()) @updatedAt
+}
+
+model Term {
+  id        String     @id @default(cuid())
+  termName  String
+  termCode  String
+  sequence  Sequence[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @default(now()) @updatedAt
+}
+
+model Finance {
+  id                    String               @id @default(cuid())
+  amountPaid            Int
+  createdAt             DateTime             @default(now())
+  paymentDate           DateTime             @default(now())
+  updatedAt             DateTime             @default(now()) @updatedAt
+  AnnStudentClassroom   AnnStudentClassroom? @relation(fields: [annStudentClassroomId], references: [id])
+  annStudentClassroomId String?
+}
+
+model Sequence {
+  id        String   @id @default(cuid())
+  seqName   String
+  seqCode   String
+  score     Score[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+  Term      Term     @relation(fields: [termId], references: [id])
+  termId    String
+}
+
+model SchoolYear {
+  id                  String                @id @default(cuid())
+  yearName            String
+  yearCode            String
+  annStudentClassroom AnnStudentClassroom[]
+  annProfDept         AnnProfDept[]
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime              @default(now()) @updatedAt
+}
+
+model AnnProfDept {
+  id           String              @id @default(cuid())
+  createdAt    DateTime            @default(now())
+  updatedAt    DateTime            @default(now()) @updatedAt
+  annProfSubj  AnnProfSubjDistro[]
+  Department   Department          @relation(fields: [departmentId], references: [id])
+  departmentId String
+  SchoolYear   SchoolYear          @relation(fields: [schoolYearId], references: [id])
+  schoolYearId String
+  Prof         Prof                @relation(fields: [profId], references: [id])
+  profId       String
+}
+
+model Logbook {
+  id                  String            @id @default(cuid())
+  subjectMatter       String
+  timeOfPeriod        DateTime          @default(now())
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime          @default(now()) @updatedAt
+  AnnProfSubjDistro   AnnProfSubjDistro @relation(fields: [AnnProfSubjDistroId], references: [id])
+  AnnProfSubjDistroId String
+}
+
+model Score {
+  id              String                @id @default(cuid())
+  marks           String
+  annStudentClass AnnStudentClassroom[]
+  annProfSubj     AnnProfSubjDistro[]
+  createdAt       DateTime              @default(now())
+  updatedAt       DateTime              @default(now()) @updatedAt
+  Sequence        Sequence              @relation(fields: [sequenceId], references: [id])
+  sequenceId      String
+}
+
+model AnnProfSubjDistro {
+  id            String      @id @default(cuid())
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @default(now()) @updatedAt
+  AnnProfDept   AnnProfDept @relation(fields: [annProfDeptId], references: [id])
+  annProfDeptId String
+  Subject       Subject     @relation(fields: [subjectId], references: [id])
+  subjectId     String
+  Classroom     Classroom   @relation(fields: [classroomId], references: [id])
+  classroomId   String
+  score         Score[]
+  Logbook       Logbook[]
+}
+
+model Subject {
+  id          String              @id @default(cuid())
+  subjectName String
+  subjectCode String
+  annProfSubj AnnProfSubjDistro[]
+
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @default(now()) @updatedAt
+  Department   Department @relation(fields: [departmentId], references: [id])
+  departmentId String
+}
+
+model Classroom {
+  id                  String                @id @default(cuid())
+  className           String
+  classCode           String
+  annProfSubj         AnnProfSubjDistro[]
+  annStudentClassroom AnnStudentClassroom[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+  Section   Section  @relation(fields: [sectionId], references: [id])
+  sectionId String
+}
+
+model Student {
+  id                  String                @id @default(cuid())
+  student1stName      String
+  student2ndName      String
+  student3rdName      String
+  sex                 String
+  studentMatricule    String
+  image               String
+  annStudentClassroom AnnStudentClassroom[]
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime              @default(now()) @updatedAt
+}
+
+model AnnStudentClassroom {
+  id               String     @id @default(cuid())
+  student1stName   String
+  student2ndName   String
+  student3rdName   String
+  sex              String
+  studentMatricule String
+  image            String
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @default(now()) @updatedAt
+  SchoolYear       SchoolYear @relation(fields: [schoolYearId], references: [id])
+  schoolYearId     String
+  Classroom        Classroom  @relation(fields: [classroomId], references: [id])
+  classroomId      String
+  Student          Student    @relation(fields: [studentId], references: [id])
+  studentId        String
+  score            Score[]
+  feePayment       Finance[]
+}
+
+model Prof {
+  id            String        @id @default(cuid())
+  prof1stName   String
+  prof2ndName   String
+  prof3rdName   String
+  profMatricule String
+  specialty     String
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @default(now()) @updatedAt
+  annProfDept   AnnProfDept[]
+}

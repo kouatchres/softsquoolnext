@@ -1,0 +1,9 @@
+#import from '../fragments/ClassroomFragment.gql'
+
+
+mutation deleteClassroom($id: String!) {
+  deleteOneClassroom(where:{id: $id}) {
+    id
+  }
+}
+  

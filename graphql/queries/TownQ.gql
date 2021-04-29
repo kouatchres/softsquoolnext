@@ -1,0 +1,19 @@
+
+#import from "../fragments/TownFragment.gql"
+#import from "../fragments/SchoolFragment.gql"
+
+  query AllTowns {
+    towns {
+
+     ...TownFragment
+    }
+  }
+
+query SingleTown($id: String!) {
+  town(id: $id ) {
+    ...TownFragment
+    schools{
+     ...SchoolFragment
+    }
+  }
+}

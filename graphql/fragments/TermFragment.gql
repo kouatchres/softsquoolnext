@@ -1,0 +1,5 @@
+fragment TermFragment on Term {
+  id
+  termName
+  termCode
+}

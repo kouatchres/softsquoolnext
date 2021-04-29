@@ -1,0 +1,35 @@
+#import from "../fragments/SchoolFragment.gql"
+#import from "../fragments/SectionFragment.gql"
+
+query AllSchools {
+  schools {
+    ...SchoolFragment
+  }
+}
+
+query SingleSchool($id: String!) {
+  schoolByID(id: $id) {
+    ...SchoolFragment
+    sections {
+      ...SectionFragment
+    }
+  }
+}
+
+query SingleSchoolBySecretCode($schoolSecretCode: String!) {
+  schoolBySecretCode(schoolSecretCode: $schoolSecretCode) {
+    ...SchoolFragment
+    sections {
+      ...SectionFragment
+    }
+  }
+}
+
+query SingleSchoolBySchoolNumber($schoolNumber: Int!) {
+  schoolBySchoolNumber(schoolNumber: $schoolNumber) {
+    ...SchoolFragment
+    sections {
+      ...SectionFragment
+    }
+  }
+}

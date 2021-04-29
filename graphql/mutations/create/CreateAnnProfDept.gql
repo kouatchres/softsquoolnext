@@ -1,0 +1,7 @@
+#import from "../fragments/AnnProfDeptFragment.gql"
+
+mutation createAnnProfDept($data: AnnProfDeptCreateInput!) {
+  createOneAnnProfDept(data: $data) {
+    ...AnnProfDeptFragment
+  }
+}

@@ -1,0 +1,9 @@
+#import RegionFragment from "../fragments/RegionFragment.graphql"
+
+
+  mutation createRegion($data:RegionCreateInput!) {
+    createOneRegion(data: $data) {
+     ...RegionFragment
+}
+  }
+ 

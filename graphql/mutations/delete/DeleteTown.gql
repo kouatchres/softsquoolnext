@@ -1,0 +1,10 @@
+
+#import from "../fragments/TownFragment.gql"
+
+mutation deleteTown($id: String!) {
+  deleteOneTown(where:{id: $id}) {
+id
+  }
+}
+  
+ 

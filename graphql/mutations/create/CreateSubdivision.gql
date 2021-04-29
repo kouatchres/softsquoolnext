@@ -1,0 +1,10 @@
+#import from "../fragments/SubdivisionFragment.gql"
+
+
+mutation createSubdivision($data: SubdivisionCreateInput!) {
+  createOneSubdivision(data: $data) {
+    ...SubdivisionFragment
+  }
+}
+  
+  

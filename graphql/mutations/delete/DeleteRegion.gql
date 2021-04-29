@@ -1,0 +1,9 @@
+#import RegionFragment from "../fragments/RegionFragment.graphql"
+
+
+mutation deleteRegion($id: String!) {
+  deleteOneRegion(where:{id: $id}) {
+    id
+  }
+}
+  

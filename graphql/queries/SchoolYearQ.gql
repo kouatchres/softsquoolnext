@@ -1,0 +1,10 @@
+#import from "../fragments/SchoolYearFragment.gql"
+
+
+  query AllSchoolYears {
+  schoolYears {
+
+      ...SchoolYearFragment
+    }
+  }
+

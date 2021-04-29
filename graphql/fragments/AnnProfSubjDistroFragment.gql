@@ -1,0 +1,3 @@
+fragment AnnProfSubjDistroFragment on AnnProfSubjDistro {
+  id
+}

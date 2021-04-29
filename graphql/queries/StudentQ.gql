@@ -1,0 +1,10 @@
+#import from "../fragments/StudentFragment.gql"
+
+
+  query AllStudents {
+    students {
+
+      ...StudentFragment
+    }
+  }
+

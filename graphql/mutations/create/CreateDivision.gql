@@ -1,0 +1,7 @@
+#import from '../fragments/DivisionFragment.gql'
+
+mutation createDivision($data: DivisionCreateInput!) {
+  createOneDivision(data: $data) {
+    ...DivisionFragment
+  }
+}

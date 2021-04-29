@@ -1,0 +1,7 @@
+fragment SchoolFragment on School {
+  id
+  schoolName
+  schoolNumber
+  schoolCode
+  schoolSecretCode
+}

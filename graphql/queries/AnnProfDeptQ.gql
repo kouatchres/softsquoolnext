@@ -1,0 +1,10 @@
+#import from "../fragments/AnnProfDeptFragment.gql"
+
+
+  query AllAnnProfDepts {
+    annProfDepts {
+
+      ...AnnProfDeptFragment
+    }
+  }
+

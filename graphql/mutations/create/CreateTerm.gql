@@ -1,0 +1,10 @@
+
+
+#import from "../fragments/TermFragment.gql"
+
+mutation createTerm($data: TermCreateInput!) {
+  createOneTerm(data: $data) {
+    ...TermFragment
+  }
+}
+ 

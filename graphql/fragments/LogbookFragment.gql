@@ -1,0 +1,5 @@
+fragment LogbookFragment on Logbook {
+  id
+  subjectMatter
+  timeOfPeriod
+}

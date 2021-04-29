@@ -1,0 +1,10 @@
+#import from "../fragments/LogbookFragment.gql"
+
+
+  query Logbooks {
+    logbooks {
+
+      ...LogbookFragment
+    }
+  }
+

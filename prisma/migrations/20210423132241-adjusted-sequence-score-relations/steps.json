@@ -1,0 +1,92 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "tag": "CreateField",
+      "model": "Sequence",
+      "field": "score",
+      "type": "Score",
+      "arity": "List"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "Sequence",
+      "field": "Score"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "Sequence",
+      "field": "scoreId"
+    },
+    {
+      "tag": "UpdateField",
+      "model": "Sequence",
+      "field": "Term",
+      "arity": "Required"
+    },
+    {
+      "tag": "UpdateField",
+      "model": "Sequence",
+      "field": "termId",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Score",
+      "field": "Sequence",
+      "type": "Sequence",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Score",
+          "field": "Sequence"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Score",
+          "field": "Sequence"
+        },
+        "directive": "relation"
+      },
+      "argument": "fields",
+      "value": "[sequenceId]"
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Score",
+          "field": "Sequence"
+        },
+        "directive": "relation"
+      },
+      "argument": "references",
+      "value": "[id]"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Score",
+      "field": "sequenceId",
+      "type": "String",
+      "arity": "Required"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "Score",
+      "field": "seq"
+    }
+  ]
+}

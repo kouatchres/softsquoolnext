@@ -1,0 +1,26 @@
+{
+  "editor.fontLigatures": null,
+  "editor.formatOnSave": true,
+  "git.ignoreLimitWarning": true,
+  "workbench.colorCustomizations": {
+    "activityBar.background": "#d17f05",
+    "activityBar.activeBorder": "#06f997",
+    "activityBar.foreground": "#013161",
+    "activityBar.inactiveForeground": "#ffff",
+    "activityBarBadge.Background": "#e7e7e7",
+    "titleBar.activeBackground": "#9f6104",
+    "titleBar.inactiveBackground": "#9f610499",
+    "titleBar.activeForeground": "#e7e7e7",
+    "titleBar.inactiveForeground": "#e7e7e799",
+    "statusBarItem.hoverBackground": "#000",
+    "activityBar.activeBackground": "#08f1e2",
+    "editorCursor.background": "#000",
+    "editorCursor.foreground": "#d17f05"
+  }
+  //   "workbench.colorCustomizations": {
+  //       "activityBar.background": "#591218",
+  //       "titleBar.activeBackground": "#7D1A21",
+  //       "titleBar.activeForeground": "#FEFBFB"
+  //   },
+  //
+}

@@ -1,0 +1,10 @@
+
+
+#import from "../fragments/SectionFragment.gql"
+
+mutation createSection($data: SectionCreateInput!) {
+  createOneSection(data: $data) {
+    ...SectionFragment
+  }
+}
+ 

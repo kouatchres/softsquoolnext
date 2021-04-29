@@ -1,0 +1,65 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "tag": "CreateField",
+      "model": "Term",
+      "field": "sequence",
+      "type": "Sequence",
+      "arity": "List"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Sequence",
+      "field": "Term",
+      "type": "Term",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Sequence",
+          "field": "Term"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Sequence",
+          "field": "Term"
+        },
+        "directive": "relation"
+      },
+      "argument": "fields",
+      "value": "[termId]"
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Sequence",
+          "field": "Term"
+        },
+        "directive": "relation"
+      },
+      "argument": "references",
+      "value": "[id]"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Sequence",
+      "field": "termId",
+      "type": "String",
+      "arity": "Optional"
+    }
+  ]
+}
