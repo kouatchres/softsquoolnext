@@ -16,11 +16,7 @@ const useStyles = makeStyles((theme: Theme) =>
 const createRegion = () => {
   const classes = useStyles();
 
-  return (
-    <div className={classes.pageStyled}>
-      <NewRegion />
-    </div>
-  );
+  return <NewRegion />;
 };
 
 export default createRegion;
