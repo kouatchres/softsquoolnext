@@ -1794,7 +1794,7 @@ export interface NexusGenInputs {
     id?: string | null; // String
     schoolCode: string; // String!
     schoolName: string; // String!
-    schoolNumber: number; // Int!
+    schoolPublicCode: string; // String!
     schoolSecretCode: string; // String!
     section?: NexusGenInputs['SectionCreateManyWithoutSchoolInput'] | null; // SectionCreateManyWithoutSchoolInput
     Town: NexusGenInputs['TownCreateOneWithoutSchoolInput']; // TownCreateOneWithoutSchoolInput!
@@ -1823,7 +1823,7 @@ export interface NexusGenInputs {
     id?: string | null; // String
     schoolCode: string; // String!
     schoolName: string; // String!
-    schoolNumber: number; // Int!
+    schoolPublicCode: string; // String!
     schoolSecretCode: string; // String!
     Town: NexusGenInputs['TownCreateOneWithoutSchoolInput']; // TownCreateOneWithoutSchoolInput!
     updatedAt?: NexusGenScalars['DateTime'] | null; // DateTime
@@ -1833,7 +1833,7 @@ export interface NexusGenInputs {
     id?: string | null; // String
     schoolCode: string; // String!
     schoolName: string; // String!
-    schoolNumber: number; // Int!
+    schoolPublicCode: string; // String!
     schoolSecretCode: string; // String!
     section?: NexusGenInputs['SectionCreateManyWithoutSchoolInput'] | null; // SectionCreateManyWithoutSchoolInput
     updatedAt?: NexusGenScalars['DateTime'] | null; // DateTime
@@ -1851,7 +1851,7 @@ export interface NexusGenInputs {
     OR?: NexusGenInputs['SchoolScalarWhereInput'][] | null; // [SchoolScalarWhereInput!]
     schoolCode?: NexusGenInputs['StringFilter'] | null; // StringFilter
     schoolName?: NexusGenInputs['StringFilter'] | null; // StringFilter
-    schoolNumber?: NexusGenInputs['IntFilter'] | null; // IntFilter
+    schoolPublicCode?: NexusGenInputs['StringFilter'] | null; // StringFilter
     schoolSecretCode?: NexusGenInputs['StringFilter'] | null; // StringFilter
     townId?: NexusGenInputs['StringFilter'] | null; // StringFilter
     updatedAt?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
@@ -1861,7 +1861,7 @@ export interface NexusGenInputs {
     id?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
     schoolCode?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
     schoolName?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
-    schoolNumber?: NexusGenInputs['IntFieldUpdateOperationsInput'] | null; // IntFieldUpdateOperationsInput
+    schoolPublicCode?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
     schoolSecretCode?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
     section?: NexusGenInputs['SectionUpdateManyWithoutSchoolInput'] | null; // SectionUpdateManyWithoutSchoolInput
     Town?: NexusGenInputs['TownUpdateOneRequiredWithoutSchoolInput'] | null; // TownUpdateOneRequiredWithoutSchoolInput
@@ -1872,7 +1872,7 @@ export interface NexusGenInputs {
     id?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
     schoolCode?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
     schoolName?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
-    schoolNumber?: NexusGenInputs['IntFieldUpdateOperationsInput'] | null; // IntFieldUpdateOperationsInput
+    schoolPublicCode?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
     schoolSecretCode?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
     updatedAt?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null; // DateTimeFieldUpdateOperationsInput
   }
@@ -1908,7 +1908,7 @@ export interface NexusGenInputs {
     id?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
     schoolCode?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
     schoolName?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
-    schoolNumber?: NexusGenInputs['IntFieldUpdateOperationsInput'] | null; // IntFieldUpdateOperationsInput
+    schoolPublicCode?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
     schoolSecretCode?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
     Town?: NexusGenInputs['TownUpdateOneRequiredWithoutSchoolInput'] | null; // TownUpdateOneRequiredWithoutSchoolInput
     updatedAt?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null; // DateTimeFieldUpdateOperationsInput
@@ -1918,7 +1918,7 @@ export interface NexusGenInputs {
     id?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
     schoolCode?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
     schoolName?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
-    schoolNumber?: NexusGenInputs['IntFieldUpdateOperationsInput'] | null; // IntFieldUpdateOperationsInput
+    schoolPublicCode?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
     schoolSecretCode?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
     section?: NexusGenInputs['SectionUpdateManyWithoutSchoolInput'] | null; // SectionUpdateManyWithoutSchoolInput
     updatedAt?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null; // DateTimeFieldUpdateOperationsInput
@@ -1940,7 +1940,7 @@ export interface NexusGenInputs {
     OR?: NexusGenInputs['SchoolWhereInput'][] | null; // [SchoolWhereInput!]
     schoolCode?: NexusGenInputs['StringFilter'] | null; // StringFilter
     schoolName?: NexusGenInputs['StringFilter'] | null; // StringFilter
-    schoolNumber?: NexusGenInputs['IntFilter'] | null; // IntFilter
+    schoolPublicCode?: NexusGenInputs['StringFilter'] | null; // StringFilter
     schoolSecretCode?: NexusGenInputs['StringFilter'] | null; // StringFilter
     section?: NexusGenInputs['SectionListRelationFilter'] | null; // SectionListRelationFilter
     Town?: NexusGenInputs['TownWhereInput'] | null; // TownWhereInput
@@ -1949,7 +1949,7 @@ export interface NexusGenInputs {
   }
   SchoolWhereUniqueInput: { // input type
     id?: string | null; // String
-    schoolNumber?: number | null; // Int
+    schoolPublicCode?: string | null; // String
     schoolSecretCode?: string | null; // String
   }
   SchoolYearCreateInput: { // input type
@@ -3329,7 +3329,7 @@ export interface NexusGenRootTypes {
     id: string; // String!
     schoolCode: string; // String!
     schoolName: string; // String!
-    schoolNumber: number; // Int!
+    schoolPublicCode: string; // String!
     schoolSecretCode: string; // String!
   }
   SchoolYear: { // root type
@@ -4014,7 +4014,7 @@ export interface NexusGenFieldTypes {
     region: NexusGenRootTypes['Region'] | null; // Region
     regions: Array<NexusGenRootTypes['Region'] | null> | null; // [Region]
     schoolByID: NexusGenRootTypes['School'] | null; // School
-    schoolBySchoolNumber: NexusGenRootTypes['School'] | null; // School
+    schoolByPublicCode: NexusGenRootTypes['School'] | null; // School
     schoolBySecretCode: NexusGenRootTypes['School'] | null; // School
     schools: Array<NexusGenRootTypes['School'] | null> | null; // [School]
     schoolYear: NexusGenRootTypes['SchoolYear'] | null; // SchoolYear
@@ -4048,7 +4048,7 @@ export interface NexusGenFieldTypes {
     id: string; // String!
     schoolCode: string; // String!
     schoolName: string; // String!
-    schoolNumber: number; // Int!
+    schoolPublicCode: string; // String!
     schoolSecretCode: string; // String!
     sections: Array<NexusGenRootTypes['Section'] | null> | null; // [Section]
   }
@@ -4272,7 +4272,7 @@ export interface NexusGenFieldTypeNames {
     region: 'Region'
     regions: 'Region'
     schoolByID: 'School'
-    schoolBySchoolNumber: 'School'
+    schoolByPublicCode: 'School'
     schoolBySecretCode: 'School'
     schools: 'School'
     schoolYear: 'SchoolYear'
@@ -4306,7 +4306,7 @@ export interface NexusGenFieldTypeNames {
     id: 'String'
     schoolCode: 'String'
     schoolName: 'String'
-    schoolNumber: 'Int'
+    schoolPublicCode: 'String'
     schoolSecretCode: 'String'
     sections: 'Section'
   }
@@ -4676,8 +4676,8 @@ export interface NexusGenArgTypes {
     schoolByID: { // args
       id?: string | null; // String
     }
-    schoolBySchoolNumber: { // args
-      schoolNumber?: number | null; // Int
+    schoolByPublicCode: { // args
+      schoolPublicCode?: string | null; // String
     }
     schoolBySecretCode: { // args
       schoolSecretCode?: string | null; // String

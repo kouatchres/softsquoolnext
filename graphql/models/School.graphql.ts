@@ -5,7 +5,7 @@ export const School = objectType({
   definition(t) {
     t.model.id();
     t.model.schoolName();
-    t.model.schoolNumber();
+    t.model.schoolPublicCode();
     t.model.schoolCode();
     t.model.schoolSecretCode();
     t.list.field('sections', {

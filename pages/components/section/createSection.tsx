@@ -13,8 +13,8 @@ import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import * as Yup from 'yup';
 import Notification from 'utils/Notification';
 import {
-  useSingleSchoolBySecretCodeLazyQuery,
-  SingleSchoolBySecretCodeDocument,
+  useSingleSchoolByPublicCodeLazyQuery,
+  SingleSchoolByPublicCodeDocument,
   useCreateSectionMutation,
   SectionCreateInput,
   AllSectionsDocument
@@ -42,15 +42,15 @@ const createSection = () => {
   const classes = useStyles();
 
   const [
-    SingleSchoolBySchoolSecretCodeQuery,
+    SingleSchoolBySchoolPublicCodeQuery,
     { data }
-  ] = useSingleSchoolBySecretCodeLazyQuery({
-    query: SingleSchoolBySecretCodeDocument
+  ] = useSingleSchoolByPublicCodeLazyQuery({
+    query: SingleSchoolByPublicCodeDocument
   });
 
   const { schoolName, id } =
-    data && data.schoolBySecretCode
-      ? data.schoolBySecretCode
+    data && data.schoolByPublicCode
+      ? data.schoolByPublicCode
       : { schoolName: '', id: '' };
   console.log({ data });
 
@@ -153,20 +153,20 @@ const createSection = () => {
                         />
 
                         <Field
-                          name="schoolSecretCode"
+                          name="schoolPublicCode"
                           component={TextField}
                           type="text"
-                          label="School secret Code"
+                          label="School Public Code"
                           variant="outlined"
                           disabled={isSubmitting}
                           onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                            SingleSchoolBySchoolSecretCodeQuery({
+                            SingleSchoolBySchoolPublicCodeQuery({
                               variables: {
-                                schoolSecretCode: event.target.value
+                                schoolPublicCode: event.target.value
                               }
                             });
                           }}
-                          helpertext={<ErrorMessage name="schoolSecretCode" />}
+                          helpertext={<ErrorMessage name="schoolPublicCode" />}
                         />
 
                         <Field

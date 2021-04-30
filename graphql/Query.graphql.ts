@@ -109,14 +109,14 @@ const Query = queryType({
       }
     });
 
-    t.field('schoolBySchoolNumber', {
+    t.field('schoolByPublicCode', {
       type: 'School',
       args: {
-        schoolNumber: intArg()
+        schoolPublicCode: stringArg()
       },
-      resolve: async (_parent, { schoolNumber }, { prisma }) => {
+      resolve: async (_parent, { schoolPublicCode }, { prisma }) => {
         return await prisma.school.findOne({
-          where: { schoolNumber: Integer(schoolNumber) }
+          where: { schoolPublicCode: String(schoolPublicCode) }
         });
       }
     });
@@ -483,6 +483,4 @@ const Query = queryType({
   }
 });
 export default Query;
-function Integer(schoolNumber: number | null | undefined): any {
-  throw new Error('Function not implemented.');
-}
+

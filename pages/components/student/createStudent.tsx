@@ -1,8 +1,8 @@
 import React, { useState, FC, ChangeEvent } from 'react';
 import { ErrorMessage, Formik, Form, Field } from 'formik';
 import { TextField } from 'material-ui-formik-components/TextField';
-import { uniqueCodeGen } from 'utils/Functions';
 import { useRouter } from 'next/router';
+import randomize from 'randomatic';
 import {
   Grid,
   Typography,
@@ -47,9 +47,7 @@ const validationSchema = Yup.object().shape({
   student1stName: Yup.string().required('Nom obligatoire'),
   student2ndName: Yup.string().required('Prénom obligatoire'),
   student3rdName: Yup.string(),
-  studentMatricule: Yup.string(),
   image: Yup.string(),
-  studentSecretCode: Yup.string(),
   dateOfBirth: Yup.date().required('Date of Birth needed'),
   placeOfBirth: Yup.string().required('Lieu obligatoire'),
   phoneNumber: Yup.number().required('Numéro de tel obligatoire'),
@@ -121,7 +119,10 @@ const CreateStudent: FC<StudentCreateInput> = () => {
               ...values,
               image,
               dateOfBirth: new Date(values.dateOfBirth),
-              studentSecretCode: uniqueCodeGen(20)
+              studentSecretCode: randomize('*', 15, {
+                exclude: "~!^()_+-={}[];',."
+              }),
+              studentMatricule: randomize('Aa0', 8)
             }
           },
           //   router.push({
@@ -202,7 +203,29 @@ const CreateStudent: FC<StudentCreateInput> = () => {
                     label="Autres Noms"
                     disabled={isSubmitting}
                   />
-
+                  <Field
+                    helpertext={<ErrorMessage name="email" />}
+                    component={TextField}
+                    name="email"
+                    type="email"
+                    label="Email"
+                    disabled={isSubmitting}
+                  />
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Field
+                    helpertext={<ErrorMessage name="file" />}
+                    component={TextField}
+                    label="Votre photo"
+                    name="file"
+                    type="file"
+                    autoFocus={true}
+                    onChange={uploadFile}
+                    disabled={isSubmitting}
+                    InputLabelProps={{
+                      shrink: true
+                    }}
+                  />
                   <Field
                     helpertext={<ErrorMessage name="placeOfBirth" />}
                     component={TextField}
@@ -210,8 +233,6 @@ const CreateStudent: FC<StudentCreateInput> = () => {
                     label="Lieu de Naissance"
                     disabled={isSubmitting}
                   />
-                </Grid>
-                <Grid item xs={12} md={6}>
                   <Field
                     name="dateOfBirth"
                     component={TextField}
@@ -230,41 +251,6 @@ const CreateStudent: FC<StudentCreateInput> = () => {
                     type="number"
                     label="No de tel"
                     disabled={isSubmitting}
-                  />
-
-                  <Field
-                    helpertext={<ErrorMessage name="email" />}
-                    component={TextField}
-                    name="email"
-                    type="email"
-                    label="Email"
-                    disabled={isSubmitting}
-                  />
-
-                  <Field
-                    helpertext={<ErrorMessage name="studentMatricule" />}
-                    component={TextField}
-                    name="studentMatricule"
-                    type="text"
-                    label="Student Matricule"
-                    disabled={isSubmitting}
-                  />
-                </Grid>
-              </Grid>
-              <Grid container direction="row">
-                <Grid item xs={12}>
-                  <Field
-                    helpertext={<ErrorMessage name="file" />}
-                    component={TextField}
-                    label="Votre photo"
-                    name="file"
-                    type="file"
-                    autoFocus={true}
-                    onChange={uploadFile}
-                    disabled={isSubmitting}
-                    InputLabelProps={{
-                      shrink: true
-                    }}
                   />
                 </Grid>
               </Grid>

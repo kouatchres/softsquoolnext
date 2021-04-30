@@ -1,9 +1,8 @@
 import React, { useState, ChangeEvent, FC } from 'react';
 import { ErrorMessage, Formik, Form, Field } from 'formik';
-
+import randomize from 'randomatic';
 import { TextField } from 'material-ui-formik-components/TextField';
 import { Select } from 'material-ui-formik-components/Select';
-import { uniqueCodeGen } from 'utils/Functions';
 import {
   Grid,
   Typography,
@@ -115,7 +114,7 @@ const CreateSchool = ({ regions }: AllRegionsQuery) => {
     schoolName: '',
     schoolCode: '',
     schoolSecretCode: '',
-    schoolNumber: 10,
+    schoolPublicCode: '',
     Town: {}
   };
   const [createSchoolMutation, { error: errMut }] = useCreateSchoolMutation();
@@ -139,7 +138,10 @@ const CreateSchool = ({ regions }: AllRegionsQuery) => {
           variables: {
             data: {
               ...values,
-              schoolSecretCode: uniqueCodeGen(20),
+              schoolSecretCode: randomize('*', 25, {
+                exclude: "~!^()_+-={}[];',."
+              }),
+              schoolPublicCode: randomize('Aa0', 12),
               Town: { connect: { id: townID } }
             }
           },
@@ -283,15 +285,7 @@ const CreateSchool = ({ regions }: AllRegionsQuery) => {
                           disabled={isSubmitting}
                           helpertext={<ErrorMessage name="schoolCode" />}
                         />
-                        <Field
-                          name="schoolNumber"
-                          component={TextField}
-                          type="number"
-                          label="Matricule Etablissement"
-                          variant="outlined"
-                          disabled={isSubmitting}
-                          helpertext={<ErrorMessage name="schoolNumber" />}
-                        />
+
                         <Notification notify={notify} setNotify={setNotify} />
                         <div style={{ placeItems: 'center', display: 'grid' }}>
                           <Button disabled={isSubmitting} onClick={submitForm}>

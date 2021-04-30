@@ -1,7 +1,7 @@
 fragment SchoolFragment on School {
   id
   schoolName
-  schoolNumber
+  schoolPublicCode
   schoolCode
   schoolSecretCode
 }

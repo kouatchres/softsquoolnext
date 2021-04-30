@@ -1,8 +1,8 @@
 import React, { useState, FC, ChangeEvent } from 'react';
 import { ErrorMessage, Formik, Form, Field } from 'formik';
 import { TextField } from 'material-ui-formik-components/TextField';
-import { uniqueCodeGen } from 'utils/Functions';
 import { useRouter } from 'next/router';
+import randomize from 'randomatic';
 import {
   Grid,
   Typography,
@@ -121,7 +121,10 @@ const CreateProf: FC<ProfCreateInput> = () => {
             data: {
               ...values,
               image,
-              profSecretCode: uniqueCodeGen(20)
+              profSecretCode: randomize('*', 20, {
+                exclude: "~!^()_+-={}[];',."
+              }),
+              profMatricule: randomize('Aa0', 10)
             }
           },
           //   router.push({
@@ -202,7 +205,8 @@ const CreateProf: FC<ProfCreateInput> = () => {
                     label="Autres Noms"
                     disabled={isSubmitting}
                   />
-
+                </Grid>
+                <Grid item xs={12} md={6}>
                   <Field
                     helperText={<ErrorMessage name="phoneNumber" />}
                     component={TextField}
@@ -211,22 +215,6 @@ const CreateProf: FC<ProfCreateInput> = () => {
                     label="No de tel"
                     disabled={isSubmitting}
                   />
-                </Grid>
-                <Grid item xs={12} md={6}>
-                  <Field
-                    helperText={<ErrorMessage name="file" />}
-                    component={TextField}
-                    label="Votre photo"
-                    name="file"
-                    type="file"
-                    autoFocus={true}
-                    onChange={uploadFile}
-                    disabled={isSubmitting}
-                    InputLabelProps={{
-                      shrink: true
-                    }}
-                  />
-
                   <Field
                     helperText={<ErrorMessage name="specialty" />}
                     component={TextField}
@@ -243,14 +231,22 @@ const CreateProf: FC<ProfCreateInput> = () => {
                     label="Email"
                     disabled={isSubmitting}
                   />
-
+                </Grid>
+              </Grid>
+              <Grid container direction="row">
+                <Grid item xs={12}>
                   <Field
-                    helperText={<ErrorMessage name="profMatricule" />}
+                    helperText={<ErrorMessage name="file" />}
                     component={TextField}
-                    name="profMatricule"
-                    type="text"
-                    label="prof Matricule"
+                    label="Votre photo"
+                    name="file"
+                    type="file"
+                    autoFocus={true}
+                    onChange={uploadFile}
                     disabled={isSubmitting}
+                    InputLabelProps={{
+                      shrink: true
+                    }}
                   />
                 </Grid>
               </Grid>

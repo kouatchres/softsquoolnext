@@ -60,7 +60,7 @@ export type Town = {
 export type School = {
   id: Scalars['String'];
   schoolName: Scalars['String'];
-  schoolNumber: Scalars['Int'];
+  schoolPublicCode: Scalars['String'];
   schoolCode: Scalars['String'];
   schoolSecretCode: Scalars['String'];
   sections?: Maybe<Array<Maybe<Section>>>;
@@ -179,7 +179,7 @@ export type Query = {
   schools?: Maybe<Array<Maybe<School>>>;
   schoolByID?: Maybe<School>;
   schoolBySecretCode?: Maybe<School>;
-  schoolBySchoolNumber?: Maybe<School>;
+  schoolByPublicCode?: Maybe<School>;
   departments?: Maybe<Array<Maybe<Department>>>;
   department?: Maybe<Department>;
   profs?: Maybe<Array<Maybe<Prof>>>;
@@ -244,8 +244,8 @@ export type QuerySchoolBySecretCodeArgs = {
 };
 
 
-export type QuerySchoolBySchoolNumberArgs = {
-  schoolNumber?: Maybe<Scalars['Int']>;
+export type QuerySchoolByPublicCodeArgs = {
+  schoolPublicCode?: Maybe<Scalars['String']>;
 };
 
 
@@ -985,7 +985,7 @@ export type TownWhereInput = {
 export type SchoolCreateInput = {
   id?: Maybe<Scalars['String']>;
   schoolName: Scalars['String'];
-  schoolNumber: Scalars['Int'];
+  schoolPublicCode: Scalars['String'];
   schoolSecretCode: Scalars['String'];
   schoolCode: Scalars['String'];
   createdAt?: Maybe<Scalars['DateTime']>;
@@ -996,14 +996,14 @@ export type SchoolCreateInput = {
 
 export type SchoolWhereUniqueInput = {
   id?: Maybe<Scalars['String']>;
-  schoolNumber?: Maybe<Scalars['Int']>;
+  schoolPublicCode?: Maybe<Scalars['String']>;
   schoolSecretCode?: Maybe<Scalars['String']>;
 };
 
 export type SchoolUpdateInput = {
   id?: Maybe<StringFieldUpdateOperationsInput>;
   schoolName?: Maybe<StringFieldUpdateOperationsInput>;
-  schoolNumber?: Maybe<IntFieldUpdateOperationsInput>;
+  schoolPublicCode?: Maybe<StringFieldUpdateOperationsInput>;
   schoolSecretCode?: Maybe<StringFieldUpdateOperationsInput>;
   schoolCode?: Maybe<StringFieldUpdateOperationsInput>;
   createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
@@ -1018,7 +1018,7 @@ export type SchoolWhereInput = {
   NOT?: Maybe<Array<SchoolWhereInput>>;
   id?: Maybe<StringFilter>;
   schoolName?: Maybe<StringFilter>;
-  schoolNumber?: Maybe<IntFilter>;
+  schoolPublicCode?: Maybe<StringFilter>;
   schoolSecretCode?: Maybe<StringFilter>;
   schoolCode?: Maybe<StringFilter>;
   section?: Maybe<SectionListRelationFilter>;
@@ -1822,14 +1822,6 @@ export type TownCreateOneWithoutSchoolInput = {
   connectOrCreate?: Maybe<TownCreateOrConnectWithoutschoolInput>;
 };
 
-export type IntFieldUpdateOperationsInput = {
-  set?: Maybe<Scalars['Int']>;
-  increment?: Maybe<Scalars['Int']>;
-  decrement?: Maybe<Scalars['Int']>;
-  multiply?: Maybe<Scalars['Int']>;
-  divide?: Maybe<Scalars['Int']>;
-};
-
 export type SectionUpdateManyWithoutSchoolInput = {
   create?: Maybe<Array<SectionCreateWithoutSchoolInput>>;
   connect?: Maybe<Array<SectionWhereUniqueInput>>;
@@ -1849,17 +1841,6 @@ export type TownUpdateOneRequiredWithoutSchoolInput = {
   update?: Maybe<TownUpdateWithoutSchoolInput>;
   upsert?: Maybe<TownUpsertWithoutSchoolInput>;
   connectOrCreate?: Maybe<TownCreateOrConnectWithoutschoolInput>;
-};
-
-export type IntFilter = {
-  equals?: Maybe<Scalars['Int']>;
-  in?: Maybe<Array<Scalars['Int']>>;
-  notIn?: Maybe<Array<Scalars['Int']>>;
-  lt?: Maybe<Scalars['Int']>;
-  lte?: Maybe<Scalars['Int']>;
-  gt?: Maybe<Scalars['Int']>;
-  gte?: Maybe<Scalars['Int']>;
-  not?: Maybe<NestedIntFilter>;
 };
 
 export type SectionListRelationFilter = {
@@ -2041,6 +2022,14 @@ export type AnnProfDeptCreateManyWithoutProfInput = {
   connectOrCreate?: Maybe<Array<AnnProfDeptCreateOrConnectWithoutProfInput>>;
 };
 
+export type IntFieldUpdateOperationsInput = {
+  set?: Maybe<Scalars['Int']>;
+  increment?: Maybe<Scalars['Int']>;
+  decrement?: Maybe<Scalars['Int']>;
+  multiply?: Maybe<Scalars['Int']>;
+  divide?: Maybe<Scalars['Int']>;
+};
+
 export type AnnProfDeptUpdateManyWithoutProfInput = {
   create?: Maybe<Array<AnnProfDeptCreateWithoutProfInput>>;
   connect?: Maybe<Array<AnnProfDeptWhereUniqueInput>>;
@@ -2052,6 +2041,17 @@ export type AnnProfDeptUpdateManyWithoutProfInput = {
   deleteMany?: Maybe<Array<AnnProfDeptScalarWhereInput>>;
   upsert?: Maybe<Array<AnnProfDeptUpsertWithWhereUniqueWithoutProfInput>>;
   connectOrCreate?: Maybe<Array<AnnProfDeptCreateOrConnectWithoutProfInput>>;
+};
+
+export type IntFilter = {
+  equals?: Maybe<Scalars['Int']>;
+  in?: Maybe<Array<Scalars['Int']>>;
+  notIn?: Maybe<Array<Scalars['Int']>>;
+  lt?: Maybe<Scalars['Int']>;
+  lte?: Maybe<Scalars['Int']>;
+  gt?: Maybe<Scalars['Int']>;
+  gte?: Maybe<Scalars['Int']>;
+  not?: Maybe<NestedIntFilter>;
 };
 
 export type SequenceCreateManyWithoutTermInput = {
@@ -2714,7 +2714,7 @@ export type RegionUpsertWithoutDivisionInput = {
 export type SchoolCreateWithoutTownInput = {
   id?: Maybe<Scalars['String']>;
   schoolName: Scalars['String'];
-  schoolNumber: Scalars['Int'];
+  schoolPublicCode: Scalars['String'];
   schoolSecretCode: Scalars['String'];
   schoolCode: Scalars['String'];
   createdAt?: Maybe<Scalars['DateTime']>;
@@ -2757,7 +2757,7 @@ export type SchoolScalarWhereInput = {
   NOT?: Maybe<Array<SchoolScalarWhereInput>>;
   id?: Maybe<StringFilter>;
   schoolName?: Maybe<StringFilter>;
-  schoolNumber?: Maybe<IntFilter>;
+  schoolPublicCode?: Maybe<StringFilter>;
   schoolSecretCode?: Maybe<StringFilter>;
   schoolCode?: Maybe<StringFilter>;
   townId?: Maybe<StringFilter>;
@@ -2856,17 +2856,6 @@ export type TownUpsertWithoutSchoolInput = {
   create: TownCreateWithoutSchoolInput;
 };
 
-export type NestedIntFilter = {
-  equals?: Maybe<Scalars['Int']>;
-  in?: Maybe<Array<Scalars['Int']>>;
-  notIn?: Maybe<Array<Scalars['Int']>>;
-  lt?: Maybe<Scalars['Int']>;
-  lte?: Maybe<Scalars['Int']>;
-  gt?: Maybe<Scalars['Int']>;
-  gte?: Maybe<Scalars['Int']>;
-  not?: Maybe<NestedIntFilter>;
-};
-
 export type DepartmentCreateWithoutSectionInput = {
   id?: Maybe<Scalars['String']>;
   deptName: Scalars['String'];
@@ -2900,7 +2889,7 @@ export type ClassroomCreateOrConnectWithoutSectionInput = {
 export type SchoolCreateWithoutSectionInput = {
   id?: Maybe<Scalars['String']>;
   schoolName: Scalars['String'];
-  schoolNumber: Scalars['Int'];
+  schoolPublicCode: Scalars['String'];
   schoolSecretCode: Scalars['String'];
   schoolCode: Scalars['String'];
   createdAt?: Maybe<Scalars['DateTime']>;
@@ -2972,7 +2961,7 @@ export type ClassroomUpsertWithWhereUniqueWithoutSectionInput = {
 export type SchoolUpdateWithoutSectionInput = {
   id?: Maybe<StringFieldUpdateOperationsInput>;
   schoolName?: Maybe<StringFieldUpdateOperationsInput>;
-  schoolNumber?: Maybe<IntFieldUpdateOperationsInput>;
+  schoolPublicCode?: Maybe<StringFieldUpdateOperationsInput>;
   schoolSecretCode?: Maybe<StringFieldUpdateOperationsInput>;
   schoolCode?: Maybe<StringFieldUpdateOperationsInput>;
   createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
@@ -3197,6 +3186,17 @@ export type AnnProfDeptUpsertWithWhereUniqueWithoutProfInput = {
   where: AnnProfDeptWhereUniqueInput;
   update: AnnProfDeptUpdateWithoutProfInput;
   create: AnnProfDeptCreateWithoutProfInput;
+};
+
+export type NestedIntFilter = {
+  equals?: Maybe<Scalars['Int']>;
+  in?: Maybe<Array<Scalars['Int']>>;
+  notIn?: Maybe<Array<Scalars['Int']>>;
+  lt?: Maybe<Scalars['Int']>;
+  lte?: Maybe<Scalars['Int']>;
+  gt?: Maybe<Scalars['Int']>;
+  gte?: Maybe<Scalars['Int']>;
+  not?: Maybe<NestedIntFilter>;
 };
 
 export type SequenceCreateWithoutTermInput = {
@@ -4204,7 +4204,7 @@ export type SubdivisionUpdateWithoutDivisionInput = {
 export type SchoolUpdateWithoutTownInput = {
   id?: Maybe<StringFieldUpdateOperationsInput>;
   schoolName?: Maybe<StringFieldUpdateOperationsInput>;
-  schoolNumber?: Maybe<IntFieldUpdateOperationsInput>;
+  schoolPublicCode?: Maybe<StringFieldUpdateOperationsInput>;
   schoolSecretCode?: Maybe<StringFieldUpdateOperationsInput>;
   schoolCode?: Maybe<StringFieldUpdateOperationsInput>;
   createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
@@ -4215,7 +4215,7 @@ export type SchoolUpdateWithoutTownInput = {
 export type SchoolUpdateManyMutationInput = {
   id?: Maybe<StringFieldUpdateOperationsInput>;
   schoolName?: Maybe<StringFieldUpdateOperationsInput>;
-  schoolNumber?: Maybe<IntFieldUpdateOperationsInput>;
+  schoolPublicCode?: Maybe<StringFieldUpdateOperationsInput>;
   schoolSecretCode?: Maybe<StringFieldUpdateOperationsInput>;
   schoolCode?: Maybe<StringFieldUpdateOperationsInput>;
   createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
@@ -4564,7 +4564,7 @@ export type RegionFragmentFragment = Pick<Region, 'id' | 'regName' | 'regCode'>;
 
 export type SchoolYearFragmentFragment = Pick<SchoolYear, 'id' | 'yearName' | 'yearCode'>;
 
-export type SchoolFragmentFragment = Pick<School, 'id' | 'schoolName' | 'schoolNumber' | 'schoolCode' | 'schoolSecretCode'>;
+export type SchoolFragmentFragment = Pick<School, 'id' | 'schoolName' | 'schoolPublicCode' | 'schoolCode' | 'schoolSecretCode'>;
 
 export type ScoreFragmentFragment = Pick<Score, 'id' | 'marks'>;
 
@@ -4958,12 +4958,12 @@ export type SingleSchoolBySecretCodeQuery = { schoolBySecretCode?: Maybe<(
     & SchoolFragmentFragment
   )> };
 
-export type SingleSchoolBySchoolNumberQueryVariables = Exact<{
-  schoolNumber: Scalars['Int'];
+export type SingleSchoolByPublicCodeQueryVariables = Exact<{
+  schoolPublicCode: Scalars['String'];
 }>;
 
 
-export type SingleSchoolBySchoolNumberQuery = { schoolBySchoolNumber?: Maybe<(
+export type SingleSchoolByPublicCodeQuery = { schoolByPublicCode?: Maybe<(
     { sections?: Maybe<Array<Maybe<SectionFragmentFragment>>> }
     & SchoolFragmentFragment
   )> };
@@ -5136,7 +5136,7 @@ export const SchoolFragmentFragmentDoc = gql`
     fragment SchoolFragment on School {
   id
   schoolName
-  schoolNumber
+  schoolPublicCode
   schoolCode
   schoolSecretCode
 }
@@ -8105,9 +8105,9 @@ export function useSingleSchoolBySecretCodeLazyQuery(baseOptions?: ApolloReactHo
 export type SingleSchoolBySecretCodeQueryHookResult = ReturnType<typeof useSingleSchoolBySecretCodeQuery>;
 export type SingleSchoolBySecretCodeLazyQueryHookResult = ReturnType<typeof useSingleSchoolBySecretCodeLazyQuery>;
 export type SingleSchoolBySecretCodeQueryResult = Apollo.QueryResult<SingleSchoolBySecretCodeQuery, SingleSchoolBySecretCodeQueryVariables>;
-export const SingleSchoolBySchoolNumberDocument = gql`
-    query SingleSchoolBySchoolNumber($schoolNumber: Int!) {
-  schoolBySchoolNumber(schoolNumber: $schoolNumber) {
+export const SingleSchoolByPublicCodeDocument = gql`
+    query SingleSchoolByPublicCode($schoolPublicCode: String!) {
+  schoolByPublicCode(schoolPublicCode: $schoolPublicCode) {
     ...SchoolFragment
     sections {
       ...SectionFragment
@@ -8116,53 +8116,53 @@ export const SingleSchoolBySchoolNumberDocument = gql`
 }
     ${SchoolFragmentFragmentDoc}
 ${SectionFragmentFragmentDoc}`;
-export type SingleSchoolBySchoolNumberComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<SingleSchoolBySchoolNumberQuery, SingleSchoolBySchoolNumberQueryVariables>, 'query'> & ({ variables: SingleSchoolBySchoolNumberQueryVariables; skip?: boolean; } | { skip: boolean; });
+export type SingleSchoolByPublicCodeComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<SingleSchoolByPublicCodeQuery, SingleSchoolByPublicCodeQueryVariables>, 'query'> & ({ variables: SingleSchoolByPublicCodeQueryVariables; skip?: boolean; } | { skip: boolean; });
 
-    export const SingleSchoolBySchoolNumberComponent = (props: SingleSchoolBySchoolNumberComponentProps) => (
-      <ApolloReactComponents.Query<SingleSchoolBySchoolNumberQuery, SingleSchoolBySchoolNumberQueryVariables> query={SingleSchoolBySchoolNumberDocument} {...props} />
+    export const SingleSchoolByPublicCodeComponent = (props: SingleSchoolByPublicCodeComponentProps) => (
+      <ApolloReactComponents.Query<SingleSchoolByPublicCodeQuery, SingleSchoolByPublicCodeQueryVariables> query={SingleSchoolByPublicCodeDocument} {...props} />
     );
     
-export type SingleSchoolBySchoolNumberProps<TChildProps = {}, TDataName extends string = 'data'> = {
-      [key in TDataName]: ApolloReactHoc.DataValue<SingleSchoolBySchoolNumberQuery, SingleSchoolBySchoolNumberQueryVariables>
+export type SingleSchoolByPublicCodeProps<TChildProps = {}, TDataName extends string = 'data'> = {
+      [key in TDataName]: ApolloReactHoc.DataValue<SingleSchoolByPublicCodeQuery, SingleSchoolByPublicCodeQueryVariables>
     } & TChildProps;
-export function withSingleSchoolBySchoolNumber<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
+export function withSingleSchoolByPublicCode<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
   TProps,
-  SingleSchoolBySchoolNumberQuery,
-  SingleSchoolBySchoolNumberQueryVariables,
-  SingleSchoolBySchoolNumberProps<TChildProps, TDataName>>) {
-    return ApolloReactHoc.withQuery<TProps, SingleSchoolBySchoolNumberQuery, SingleSchoolBySchoolNumberQueryVariables, SingleSchoolBySchoolNumberProps<TChildProps, TDataName>>(SingleSchoolBySchoolNumberDocument, {
-      alias: 'singleSchoolBySchoolNumber',
+  SingleSchoolByPublicCodeQuery,
+  SingleSchoolByPublicCodeQueryVariables,
+  SingleSchoolByPublicCodeProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withQuery<TProps, SingleSchoolByPublicCodeQuery, SingleSchoolByPublicCodeQueryVariables, SingleSchoolByPublicCodeProps<TChildProps, TDataName>>(SingleSchoolByPublicCodeDocument, {
+      alias: 'singleSchoolByPublicCode',
       ...operationOptions
     });
 };
 
 /**
- * __useSingleSchoolBySchoolNumberQuery__
+ * __useSingleSchoolByPublicCodeQuery__
  *
- * To run a query within a React component, call `useSingleSchoolBySchoolNumberQuery` and pass it any options that fit your needs.
- * When your component renders, `useSingleSchoolBySchoolNumberQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useSingleSchoolByPublicCodeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSingleSchoolByPublicCodeQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useSingleSchoolBySchoolNumberQuery({
+ * const { data, loading, error } = useSingleSchoolByPublicCodeQuery({
  *   variables: {
- *      schoolNumber: // value for 'schoolNumber'
+ *      schoolPublicCode: // value for 'schoolPublicCode'
  *   },
  * });
  */
-export function useSingleSchoolBySchoolNumberQuery(baseOptions: ApolloReactHooks.QueryHookOptions<SingleSchoolBySchoolNumberQuery, SingleSchoolBySchoolNumberQueryVariables>) {
+export function useSingleSchoolByPublicCodeQuery(baseOptions: ApolloReactHooks.QueryHookOptions<SingleSchoolByPublicCodeQuery, SingleSchoolByPublicCodeQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<SingleSchoolBySchoolNumberQuery, SingleSchoolBySchoolNumberQueryVariables>(SingleSchoolBySchoolNumberDocument, options);
+        return ApolloReactHooks.useQuery<SingleSchoolByPublicCodeQuery, SingleSchoolByPublicCodeQueryVariables>(SingleSchoolByPublicCodeDocument, options);
       }
-export function useSingleSchoolBySchoolNumberLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<SingleSchoolBySchoolNumberQuery, SingleSchoolBySchoolNumberQueryVariables>) {
+export function useSingleSchoolByPublicCodeLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<SingleSchoolByPublicCodeQuery, SingleSchoolByPublicCodeQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<SingleSchoolBySchoolNumberQuery, SingleSchoolBySchoolNumberQueryVariables>(SingleSchoolBySchoolNumberDocument, options);
+          return ApolloReactHooks.useLazyQuery<SingleSchoolByPublicCodeQuery, SingleSchoolByPublicCodeQueryVariables>(SingleSchoolByPublicCodeDocument, options);
         }
-export type SingleSchoolBySchoolNumberQueryHookResult = ReturnType<typeof useSingleSchoolBySchoolNumberQuery>;
-export type SingleSchoolBySchoolNumberLazyQueryHookResult = ReturnType<typeof useSingleSchoolBySchoolNumberLazyQuery>;
-export type SingleSchoolBySchoolNumberQueryResult = Apollo.QueryResult<SingleSchoolBySchoolNumberQuery, SingleSchoolBySchoolNumberQueryVariables>;
+export type SingleSchoolByPublicCodeQueryHookResult = ReturnType<typeof useSingleSchoolByPublicCodeQuery>;
+export type SingleSchoolByPublicCodeLazyQueryHookResult = ReturnType<typeof useSingleSchoolByPublicCodeLazyQuery>;
+export type SingleSchoolByPublicCodeQueryResult = Apollo.QueryResult<SingleSchoolByPublicCodeQuery, SingleSchoolByPublicCodeQueryVariables>;
 export const AllSchoolYearsDocument = gql`
     query AllSchoolYears {
   schoolYears {
@@ -8952,10 +8952,10 @@ export type ResolversTypes = {
   Subdivision: ResolverTypeWrapper<Subdivision>;
   Town: ResolverTypeWrapper<Town>;
   School: ResolverTypeWrapper<School>;
-  Int: ResolverTypeWrapper<Scalars['Int']>;
   Section: ResolverTypeWrapper<Section>;
   Department: ResolverTypeWrapper<Department>;
   Prof: ResolverTypeWrapper<Prof>;
+  Int: ResolverTypeWrapper<Scalars['Int']>;
   Sequence: ResolverTypeWrapper<Sequence>;
   AnnProfDept: ResolverTypeWrapper<AnnProfDept>;
   AnnProfSubjDistro: ResolverTypeWrapper<AnnProfSubjDistro>;
@@ -9072,10 +9072,8 @@ export type ResolversTypes = {
   SchoolListRelationFilter: SchoolListRelationFilter;
   SectionCreateManyWithoutSchoolInput: SectionCreateManyWithoutSchoolInput;
   TownCreateOneWithoutSchoolInput: TownCreateOneWithoutSchoolInput;
-  IntFieldUpdateOperationsInput: IntFieldUpdateOperationsInput;
   SectionUpdateManyWithoutSchoolInput: SectionUpdateManyWithoutSchoolInput;
   TownUpdateOneRequiredWithoutSchoolInput: TownUpdateOneRequiredWithoutSchoolInput;
-  IntFilter: IntFilter;
   SectionListRelationFilter: SectionListRelationFilter;
   DepartmentCreateManyWithoutSectionInput: DepartmentCreateManyWithoutSectionInput;
   ClassroomCreateManyWithoutSectionInput: ClassroomCreateManyWithoutSectionInput;
@@ -9099,7 +9097,9 @@ export type ResolversTypes = {
   SubjectUpdateManyWithoutDepartmentInput: SubjectUpdateManyWithoutDepartmentInput;
   SectionUpdateOneRequiredWithoutDepartmentInput: SectionUpdateOneRequiredWithoutDepartmentInput;
   AnnProfDeptCreateManyWithoutProfInput: AnnProfDeptCreateManyWithoutProfInput;
+  IntFieldUpdateOperationsInput: IntFieldUpdateOperationsInput;
   AnnProfDeptUpdateManyWithoutProfInput: AnnProfDeptUpdateManyWithoutProfInput;
+  IntFilter: IntFilter;
   SequenceCreateManyWithoutTermInput: SequenceCreateManyWithoutTermInput;
   SequenceUpdateManyWithoutTermInput: SequenceUpdateManyWithoutTermInput;
   SequenceListRelationFilter: SequenceListRelationFilter;
@@ -9203,7 +9203,6 @@ export type ResolversTypes = {
   SectionUpsertWithWhereUniqueWithoutSchoolInput: SectionUpsertWithWhereUniqueWithoutSchoolInput;
   TownUpdateWithoutSchoolInput: TownUpdateWithoutSchoolInput;
   TownUpsertWithoutSchoolInput: TownUpsertWithoutSchoolInput;
-  NestedIntFilter: NestedIntFilter;
   DepartmentCreateWithoutSectionInput: DepartmentCreateWithoutSectionInput;
   DepartmentCreateOrConnectWithoutSectionInput: DepartmentCreateOrConnectWithoutSectionInput;
   ClassroomCreateWithoutSectionInput: ClassroomCreateWithoutSectionInput;
@@ -9251,6 +9250,7 @@ export type ResolversTypes = {
   AnnProfDeptUpdateWithWhereUniqueWithoutProfInput: AnnProfDeptUpdateWithWhereUniqueWithoutProfInput;
   AnnProfDeptUpdateManyWithWhereWithoutProfInput: AnnProfDeptUpdateManyWithWhereWithoutProfInput;
   AnnProfDeptUpsertWithWhereUniqueWithoutProfInput: AnnProfDeptUpsertWithWhereUniqueWithoutProfInput;
+  NestedIntFilter: NestedIntFilter;
   SequenceCreateWithoutTermInput: SequenceCreateWithoutTermInput;
   SequenceCreateOrConnectWithoutTermInput: SequenceCreateOrConnectWithoutTermInput;
   SequenceUpdateWithWhereUniqueWithoutTermInput: SequenceUpdateWithWhereUniqueWithoutTermInput;
@@ -9442,10 +9442,10 @@ export type ResolversParentTypes = {
   Subdivision: Subdivision;
   Town: Town;
   School: School;
-  Int: Scalars['Int'];
   Section: Section;
   Department: Department;
   Prof: Prof;
+  Int: Scalars['Int'];
   Sequence: Sequence;
   AnnProfDept: AnnProfDept;
   AnnProfSubjDistro: AnnProfSubjDistro;
@@ -9562,10 +9562,8 @@ export type ResolversParentTypes = {
   SchoolListRelationFilter: SchoolListRelationFilter;
   SectionCreateManyWithoutSchoolInput: SectionCreateManyWithoutSchoolInput;
   TownCreateOneWithoutSchoolInput: TownCreateOneWithoutSchoolInput;
-  IntFieldUpdateOperationsInput: IntFieldUpdateOperationsInput;
   SectionUpdateManyWithoutSchoolInput: SectionUpdateManyWithoutSchoolInput;
   TownUpdateOneRequiredWithoutSchoolInput: TownUpdateOneRequiredWithoutSchoolInput;
-  IntFilter: IntFilter;
   SectionListRelationFilter: SectionListRelationFilter;
   DepartmentCreateManyWithoutSectionInput: DepartmentCreateManyWithoutSectionInput;
   ClassroomCreateManyWithoutSectionInput: ClassroomCreateManyWithoutSectionInput;
@@ -9589,7 +9587,9 @@ export type ResolversParentTypes = {
   SubjectUpdateManyWithoutDepartmentInput: SubjectUpdateManyWithoutDepartmentInput;
   SectionUpdateOneRequiredWithoutDepartmentInput: SectionUpdateOneRequiredWithoutDepartmentInput;
   AnnProfDeptCreateManyWithoutProfInput: AnnProfDeptCreateManyWithoutProfInput;
+  IntFieldUpdateOperationsInput: IntFieldUpdateOperationsInput;
   AnnProfDeptUpdateManyWithoutProfInput: AnnProfDeptUpdateManyWithoutProfInput;
+  IntFilter: IntFilter;
   SequenceCreateManyWithoutTermInput: SequenceCreateManyWithoutTermInput;
   SequenceUpdateManyWithoutTermInput: SequenceUpdateManyWithoutTermInput;
   SequenceListRelationFilter: SequenceListRelationFilter;
@@ -9692,7 +9692,6 @@ export type ResolversParentTypes = {
   SectionUpsertWithWhereUniqueWithoutSchoolInput: SectionUpsertWithWhereUniqueWithoutSchoolInput;
   TownUpdateWithoutSchoolInput: TownUpdateWithoutSchoolInput;
   TownUpsertWithoutSchoolInput: TownUpsertWithoutSchoolInput;
-  NestedIntFilter: NestedIntFilter;
   DepartmentCreateWithoutSectionInput: DepartmentCreateWithoutSectionInput;
   DepartmentCreateOrConnectWithoutSectionInput: DepartmentCreateOrConnectWithoutSectionInput;
   ClassroomCreateWithoutSectionInput: ClassroomCreateWithoutSectionInput;
@@ -9740,6 +9739,7 @@ export type ResolversParentTypes = {
   AnnProfDeptUpdateWithWhereUniqueWithoutProfInput: AnnProfDeptUpdateWithWhereUniqueWithoutProfInput;
   AnnProfDeptUpdateManyWithWhereWithoutProfInput: AnnProfDeptUpdateManyWithWhereWithoutProfInput;
   AnnProfDeptUpsertWithWhereUniqueWithoutProfInput: AnnProfDeptUpsertWithWhereUniqueWithoutProfInput;
+  NestedIntFilter: NestedIntFilter;
   SequenceCreateWithoutTermInput: SequenceCreateWithoutTermInput;
   SequenceCreateOrConnectWithoutTermInput: SequenceCreateOrConnectWithoutTermInput;
   SequenceUpdateWithWhereUniqueWithoutTermInput: SequenceUpdateWithWhereUniqueWithoutTermInput;
@@ -9965,7 +9965,7 @@ export type TownResolvers<ContextType = any, ParentType extends ResolversParentT
 export type SchoolResolvers<ContextType = any, ParentType extends ResolversParentTypes['School'] = ResolversParentTypes['School']> = {
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   schoolName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  schoolNumber?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  schoolPublicCode?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   schoolCode?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   schoolSecretCode?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   sections?: Resolver<Maybe<Array<Maybe<ResolversTypes['Section']>>>, ParentType, ContextType>;
@@ -10099,7 +10099,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   schools?: Resolver<Maybe<Array<Maybe<ResolversTypes['School']>>>, ParentType, ContextType>;
   schoolByID?: Resolver<Maybe<ResolversTypes['School']>, ParentType, ContextType, RequireFields<QuerySchoolByIdArgs, never>>;
   schoolBySecretCode?: Resolver<Maybe<ResolversTypes['School']>, ParentType, ContextType, RequireFields<QuerySchoolBySecretCodeArgs, never>>;
-  schoolBySchoolNumber?: Resolver<Maybe<ResolversTypes['School']>, ParentType, ContextType, RequireFields<QuerySchoolBySchoolNumberArgs, never>>;
+  schoolByPublicCode?: Resolver<Maybe<ResolversTypes['School']>, ParentType, ContextType, RequireFields<QuerySchoolByPublicCodeArgs, never>>;
   departments?: Resolver<Maybe<Array<Maybe<ResolversTypes['Department']>>>, ParentType, ContextType>;
   department?: Resolver<Maybe<ResolversTypes['Department']>, ParentType, ContextType, RequireFields<QueryDepartmentArgs, never>>;
   profs?: Resolver<Maybe<Array<Maybe<ResolversTypes['Prof']>>>, ParentType, ContextType>;

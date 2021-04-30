@@ -2114,7 +2114,7 @@ type Query {
   region(id: String): Region
   regions: [Region]
   schoolByID(id: String): School
-  schoolBySchoolNumber(schoolNumber: Int): School
+  schoolByPublicCode(schoolPublicCode: String): School
   schoolBySecretCode(schoolSecretCode: String): School
   schools: [School]
   schoolYear(id: String): SchoolYear
@@ -2229,7 +2229,7 @@ type School {
   id: String!
   schoolCode: String!
   schoolName: String!
-  schoolNumber: Int!
+  schoolPublicCode: String!
   schoolSecretCode: String!
   sections: [Section]
 }
@@ -2239,7 +2239,7 @@ input SchoolCreateInput {
   id: String
   schoolCode: String!
   schoolName: String!
-  schoolNumber: Int!
+  schoolPublicCode: String!
   schoolSecretCode: String!
   section: SectionCreateManyWithoutSchoolInput
   Town: TownCreateOneWithoutSchoolInput!
@@ -2273,7 +2273,7 @@ input SchoolCreateWithoutSectionInput {
   id: String
   schoolCode: String!
   schoolName: String!
-  schoolNumber: Int!
+  schoolPublicCode: String!
   schoolSecretCode: String!
   Town: TownCreateOneWithoutSchoolInput!
   updatedAt: DateTime
@@ -2284,7 +2284,7 @@ input SchoolCreateWithoutTownInput {
   id: String
   schoolCode: String!
   schoolName: String!
-  schoolNumber: Int!
+  schoolPublicCode: String!
   schoolSecretCode: String!
   section: SectionCreateManyWithoutSchoolInput
   updatedAt: DateTime
@@ -2304,7 +2304,7 @@ input SchoolScalarWhereInput {
   OR: [SchoolScalarWhereInput!]
   schoolCode: StringFilter
   schoolName: StringFilter
-  schoolNumber: IntFilter
+  schoolPublicCode: StringFilter
   schoolSecretCode: StringFilter
   townId: StringFilter
   updatedAt: DateTimeFilter
@@ -2315,7 +2315,7 @@ input SchoolUpdateInput {
   id: StringFieldUpdateOperationsInput
   schoolCode: StringFieldUpdateOperationsInput
   schoolName: StringFieldUpdateOperationsInput
-  schoolNumber: IntFieldUpdateOperationsInput
+  schoolPublicCode: StringFieldUpdateOperationsInput
   schoolSecretCode: StringFieldUpdateOperationsInput
   section: SectionUpdateManyWithoutSchoolInput
   Town: TownUpdateOneRequiredWithoutSchoolInput
@@ -2327,7 +2327,7 @@ input SchoolUpdateManyMutationInput {
   id: StringFieldUpdateOperationsInput
   schoolCode: StringFieldUpdateOperationsInput
   schoolName: StringFieldUpdateOperationsInput
-  schoolNumber: IntFieldUpdateOperationsInput
+  schoolPublicCode: StringFieldUpdateOperationsInput
   schoolSecretCode: StringFieldUpdateOperationsInput
   updatedAt: DateTimeFieldUpdateOperationsInput
 }
@@ -2363,7 +2363,7 @@ input SchoolUpdateWithoutSectionInput {
   id: StringFieldUpdateOperationsInput
   schoolCode: StringFieldUpdateOperationsInput
   schoolName: StringFieldUpdateOperationsInput
-  schoolNumber: IntFieldUpdateOperationsInput
+  schoolPublicCode: StringFieldUpdateOperationsInput
   schoolSecretCode: StringFieldUpdateOperationsInput
   Town: TownUpdateOneRequiredWithoutSchoolInput
   updatedAt: DateTimeFieldUpdateOperationsInput
@@ -2374,7 +2374,7 @@ input SchoolUpdateWithoutTownInput {
   id: StringFieldUpdateOperationsInput
   schoolCode: StringFieldUpdateOperationsInput
   schoolName: StringFieldUpdateOperationsInput
-  schoolNumber: IntFieldUpdateOperationsInput
+  schoolPublicCode: StringFieldUpdateOperationsInput
   schoolSecretCode: StringFieldUpdateOperationsInput
   section: SectionUpdateManyWithoutSchoolInput
   updatedAt: DateTimeFieldUpdateOperationsInput
@@ -2404,7 +2404,7 @@ input SchoolWhereInput {
   OR: [SchoolWhereInput!]
   schoolCode: StringFilter
   schoolName: StringFilter
-  schoolNumber: IntFilter
+  schoolPublicCode: StringFilter
   schoolSecretCode: StringFilter
   section: SectionListRelationFilter
   Town: TownWhereInput
@@ -2414,7 +2414,7 @@ input SchoolWhereInput {
 
 input SchoolWhereUniqueInput {
   id: String
-  schoolNumber: Int
+  schoolPublicCode: String
   schoolSecretCode: String
 }
 
