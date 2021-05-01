@@ -48,6 +48,7 @@
     "next-urql": "^2.1.1",
     "nexus-plugin-prisma": "^0.24.0",
     "node-fetch": "^2.6.1",
+    "pad-left": "^2.1.0",
     "randomatic": "^3.1.1",
     "react": "^17.0.1",
     "react-apollo": "^3.1.5",

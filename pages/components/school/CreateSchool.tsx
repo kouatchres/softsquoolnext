@@ -182,128 +182,120 @@ const CreateSchool = ({ regions }: AllRegionsQuery) => {
               {/* <Error error={error || errMut ||errSubdiv  ||errDiv} /> */}
 
               {isSubmitting && <LinearProgress />}
+
               <Grid
-                direction="column"
                 container
-                alignItems="center"
+                direction="row"
                 justify="center"
+                alignItems="center"
+                style={{
+                  paddingTop: '0.2rem',
+                  backgroundColor: '#ede6b9',
+                  borderRadius: '0.2rem'
+                }}
               >
                 <Grid item>
-                  <Grid
-                    container
-                    direction="row"
-                    justify="center"
-                    alignItems="center"
-                    style={{
-                      paddingTop: '0.2rem',
-                      backgroundColor: '#ede6b9',
-                      borderRadius: '0.2rem'
-                    }}
+                  <Typography
+                    color="primary"
+                    gutterBottom
+                    variant="body2"
+                    component="h6"
                   >
-                    <Grid item>
-                      <Typography
-                        color="primary"
-                        gutterBottom
-                        variant="body2"
-                        component="h6"
-                      >
-                        New School
-                      </Typography>
-                    </Grid>
-                  </Grid>
+                    New School
+                  </Typography>
                 </Grid>
-                <Grid container spacing={5} direction="row">
-                  <Grid item sm={12}>
-                    <Grid container direction="column">
-                      <Grid item>
-                        <Field
-                          name="regionID"
-                          component={Select}
-                          type="text"
-                          options={regionsOptions}
-                          label="Choix de region"
-                          variant="outlined"
-                          disabled={isSubmitting}
-                          onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                            SingleRegionQuery({
-                              variables: { id: event.target.value }
-                            });
-                          }}
-                          helpertext={<ErrorMessage name="regionID" />}
-                        />
+              </Grid>
+              <Grid container spacing={5} direction="row">
+                <Grid item sm={12}>
+                  <Grid container direction="column">
+                    <Grid item>
+                      <Field
+                        name="regionID"
+                        component={Select}
+                        type="text"
+                        options={regionsOptions}
+                        label="Choix de region"
+                        variant="outlined"
+                        disabled={isSubmitting}
+                        onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                          SingleRegionQuery({
+                            variables: { id: event.target.value }
+                          });
+                        }}
+                        helpertext={<ErrorMessage name="regionID" />}
+                      />
 
-                        <Field
-                          name="divisionID"
-                          component={Select}
-                          type="text"
-                          options={divisionsOptions}
-                          label="Choix du Department"
-                          variant="outlined"
-                          disabled={isSubmitting || !data}
-                          onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                            SingleDivisionQuery({
-                              variables: { id: event.target.value }
-                            });
-                          }}
-                          helpertext={<ErrorMessage name="divisionID" />}
-                        />
+                      <Field
+                        name="divisionID"
+                        component={Select}
+                        type="text"
+                        options={divisionsOptions}
+                        label="Choix du Department"
+                        variant="outlined"
+                        disabled={isSubmitting || !data}
+                        onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                          SingleDivisionQuery({
+                            variables: { id: event.target.value }
+                          });
+                        }}
+                        helpertext={<ErrorMessage name="divisionID" />}
+                      />
 
-                        <Field
-                          name="subdivisionID"
-                          component={Select}
-                          type="text"
-                          options={subdivisionsOptions}
-                          label="Choix de l'arrondissement"
-                          variant="outlined"
-                          disabled={isSubmitting || !dataDivision}
-                          onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                            SingleSubdivisionQuery({
-                              variables: { id: event.target.value }
-                            });
-                          }}
-                          helpertext={<ErrorMessage name="subdivisionID" />}
-                        />
+                      <Field
+                        name="subdivisionID"
+                        component={Select}
+                        type="text"
+                        options={subdivisionsOptions}
+                        label="Choix de l'arrondissement"
+                        variant="outlined"
+                        disabled={isSubmitting || !dataDivision}
+                        onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                          SingleSubdivisionQuery({
+                            variables: { id: event.target.value }
+                          });
+                        }}
+                        helpertext={<ErrorMessage name="subdivisionID" />}
+                      />
 
-                        <Field
-                          name="TownID"
-                          component={Select}
-                          type="text"
-                          options={townsOptions}
-                          label="Choix de la ville"
-                          variant="outlined"
-                          disabled={isSubmitting || !dataSubdivision}
-                          onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                            handleTownSelectChange(event);
-                          }}
-                          helpertext={<ErrorMessage name="TownID" />}
-                        />
-                        <Field
-                          name="schoolName"
-                          component={TextField}
-                          type="text"
-                          label="Libellé Ecole"
-                          variant="outlined"
-                          disabled={isSubmitting}
-                          helpertext={<ErrorMessage name="schoolName" />}
-                        />
-                        <Field
-                          name="schoolCode"
-                          component={TextField}
-                          type="text"
-                          label="Code Ecole"
-                          variant="outlined"
-                          disabled={isSubmitting}
-                          helpertext={<ErrorMessage name="schoolCode" />}
-                        />
+                      <Field
+                        name="TownID"
+                        component={Select}
+                        type="text"
+                        options={townsOptions}
+                        label="Choix de la ville"
+                        variant="outlined"
+                        disabled={isSubmitting || !dataSubdivision}
+                        onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                          handleTownSelectChange(event);
+                        }}
+                        helpertext={<ErrorMessage name="TownID" />}
+                      />
+                      <Field
+                        name="schoolName"
+                        component={TextField}
+                        type="text"
+                        label="Libellé Ecole"
+                        variant="outlined"
+                        disabled={isSubmitting}
+                        helpertext={<ErrorMessage name="schoolName" />}
+                      />
+                      <Field
+                        name="schoolCode"
+                        component={TextField}
+                        type="text"
+                        label="Code Ecole"
+                        variant="outlined"
+                        disabled={isSubmitting}
+                        helpertext={<ErrorMessage name="schoolCode" />}
+                      />
 
-                        <Notification notify={notify} setNotify={setNotify} />
-                        <div style={{ placeItems: 'center', display: 'grid' }}>
-                          <Button disabled={isSubmitting} onClick={submitForm}>
-                            {isSubmitting && <CircularProgress />}
-                            {isSubmitting ? 'Creating School' : 'New School'}
-                          </Button>
-                        </div>
-                      </Grid>
+                      <Notification notify={notify} setNotify={setNotify} />
+                      <div style={{ placeItems: 'center', display: 'grid' }}>
+                        <Button disabled={isSubmitting} onClick={submitForm}>
+                          {isSubmitting && <CircularProgress />}
+                          {isSubmitting ? 'Creating School' : 'New School'}
+                        </Button>
+                      </div>
                     </Grid>
                   </Grid>
                 </Grid>

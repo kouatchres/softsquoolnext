@@ -168,7 +168,12 @@ const CreateProf: FC<ProfCreateInput> = () => {
           <Paper className={classes.pageStyled}>
             <Form aria-busy={isSubmitting}>
               {isSubmitting && <LinearProgress />}
-              <Grid container direction="row" justify="center">
+              <Grid container direction="row" justify="center"  alignItems="center"
+                style={{
+                  backgroundColor: '#ede6b9',
+                  borderRadius: '0.2rem',
+                  paddingTop: '0.2rem'
+                }}>
                 <Grid item>
                   <Typography
                     align={matchesSM ? 'center' : undefined}

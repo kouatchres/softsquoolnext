@@ -269,7 +269,7 @@ const SygefexTheme = createMuiTheme({
 
     MuiPaper: {
       rounded: {
-        elevation: 5,
+        // elevation: 5,
         borderRadius: '0.4rem',
         margin: 'auto'
       }
@@ -313,10 +313,10 @@ const SygefexTheme = createMuiTheme({
         backgroundColor: `${sygefexGreen}`,
         textTransform: 'none',
         marginBottom: '0.5rem',
-        // marginTop: '0.5rem',
+        marginTop: '0.1rem',
         fontSize: '0.8rem',
-        fontWeight: 300,
-        padding: '.2rem',
+        fontWeight: 200,
+        padding: '.1rem',
         borderRadius: '0.3rem',
         fontFamily: 'Comic Sans MS',
         variant: 'outlined',

@@ -15,10 +15,8 @@ import * as Yup from 'yup';
 import Notification from '../utils/Notification';
 import {
   UserCreateInput,
-  AllUsersDocument,
-  AllUsersQuery,
   useCreateOneUserMutation
-} from '../../../../generated/graphql';
+} from '../../../generated/graphql';
 
 const useStyles = makeStyles((theme: Theme) => ({
   pageStyled: {
@@ -92,21 +90,21 @@ const NewUser: React.FC<UserCreateInput> = () => {
               ...values,
               image: image
             }
-          },
-          update: (cache, { data }) => {
-            const currentUserList: AllUsersQuery = cache.readQuery({
-              query: AllUsersDocument
-            }) ?? { users: [] };
-            const addedUser = data?.createOneUser;
-            if (addedUser) {
-              cache.writeQuery({
-                query: AllUsersDocument,
-                data: {
-                  regions: [...currentUserList.users, addedUser]
-                }
-              });
-            }
           }
+          // update: (cache, { data }) => {
+          //   const currentUserList: AllUsersQuery = cache.readQuery({
+          //     query: AllUsersDocument
+          //   }) ?? { users: [] };
+          //   const addedUser = data?.createOneUser;
+          //   if (addedUser) {
+          //     cache.writeQuery({
+          //       query: AllUsersDocument,
+          //       data: {
+          //         regions: [...currentUserList.users, addedUser]
+          //       }
+          //     });
+          //   }
+          // }
         });
 
         setTimeout(() => {
@@ -114,7 +112,7 @@ const NewUser: React.FC<UserCreateInput> = () => {
           console.log(res);
           setNotify({
             isOpen: true,
-            message: 'Nouvelle Région créée avec succès',
+            message: 'User creation successful ',
             type: 'success'
           });
           resetForm();
@@ -127,94 +125,92 @@ const NewUser: React.FC<UserCreateInput> = () => {
           <Paper className={classes.pageStyled}>
             <Form aria-busy={isSubmitting}>
               {isSubmitting && <LinearProgress />}
-              <Grid direction="column" container justify="center">
-                <Grid item>
-                  <Grid container direction="row" justify="center">
-                    <Grid item>
-                      <Typography
-                        color="primary"
-                        gutterBottom
-                        variant="body2"
-                        component="h6"
-                      >
-                        New User
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                </Grid>
-                <Grid container spacing={5} direction="row">
-                  <Grid item sm={12}>
-                    <Grid container direction="column">
-                      <Grid item>
-                        <FormControl fullWidth>
-                          <Field
-                            helpertext={<ErrorMessage name="file" />}
-                            component={TextField}
-                            label="Votre photo"
-                            name="file"
-                            type="file"
-                            autoFocus={true}
-                            onChange={uploadFile}
-                            disabled={isSubmitting}
-                            InputLabelProps={{
-                              shrink: true
-                            }}
-                          />
-                          <Field
-                            name="name"
-                            component={TextField}
-                            type="text"
-                            fullWidth
-                            label="User Name"
-                            variant="outlined"
-                            disabled={isSubmitting}
-                            helpertext={<ErrorMessage name="name" />}
-                          />
-                          <Field
-                            name="email"
-                            component={TextField}
-                            type="text"
-                            fullWidth
-                            label="Email"
-                            variant="outlined"
-                            disabled={isSubmitting}
-                            helpertext={<ErrorMessage name="email" />}
-                          />
 
-                          <Grid container justify="center">
-                            <Grid item>
-                              <img
-                                style={{
-                                  height: 'auto',
-                                  width: '40%',
-                                  display: 'grid',
-                                  placeItems: 'center',
-                                  backgroundSize: 'contain',
-                                  backgroundPosition: 'center',
-                                  borderRadius: '0.5rem',
-                                  margin: '0.5rem  auto'
-                                }}
-                                src={image}
-                                alt="Upload image"
-                              />
-                            </Grid>
-                          </Grid>
-                          <Notification notify={notify} setNotify={setNotify} />
-                          <div
-                            style={{ placeItems: 'center', display: 'grid' }}
-                          >
-                            <Button
-                              disabled={isSubmitting}
-                              onClick={submitForm}
-                            >
-                              {isSubmitting && <CircularProgress />}
-                              {isSubmitting ? 'Creating User' : 'New User'}
-                            </Button>
-                          </div>
-                        </FormControl>
+              <Grid
+                container
+                direction="row"
+                justify="center"
+                alignItems="center"
+                style={{
+                  paddingTop: '0.2rem',
+                  backgroundColor: '#ede6b9',
+                  borderRadius: '0.2rem'
+                }}
+              >
+                <Grid item>
+                  <Typography
+                    color="primary"
+                    gutterBottom
+                    variant="body2"
+                    component="h6"
+                  >
+                    New User
+                  </Typography>
+                </Grid>
+              </Grid>
+              <Grid container direction="column">
+                <Grid item>
+                  <FormControl fullWidth>
+                    <Field
+                      helpertext={<ErrorMessage name="file" />}
+                      component={TextField}
+                      label="Votre photo"
+                      name="file"
+                      type="file"
+                      autoFocus={true}
+                      onChange={uploadFile}
+                      disabled={isSubmitting}
+                      InputLabelProps={{
+                        shrink: true
+                      }}
+                    />
+                    <Field
+                      name="name"
+                      component={TextField}
+                      type="text"
+                      fullWidth
+                      label="User Name"
+                      variant="outlined"
+                      disabled={isSubmitting}
+                      helpertext={<ErrorMessage name="name" />}
+                    />
+                    <Field
+                      name="email"
+                      component={TextField}
+                      type="text"
+                      fullWidth
+                      label="Email"
+                      variant="outlined"
+                      disabled={isSubmitting}
+                      helpertext={<ErrorMessage name="email" />}
+                    />
+
+                    <Grid container justify="center">
+                      <Grid item>
+                        <img
+                          style={{
+                            height: 'auto',
+                            width: '40%',
+                            display: 'grid',
+                            placeItems: 'center',
+                            backgroundSize: 'contain',
+                            backgroundPosition: 'center',
+                            borderRadius: '0.5rem',
+                            margin: '0.5rem  auto'
+                          }}
+                          src={image}
+                          alt="Upload image"
+                        />
                       </Grid>
                     </Grid>
-                  </Grid>
+                    <Notification notify={notify} setNotify={setNotify} />
+                    <div style={{ placeItems: 'center', display: 'grid' }}>
+                      <Button disabled={isSubmitting} onClick={submitForm}>
+                        {isSubmitting && <CircularProgress />}
+                        {isSubmitting ? 'Creating User' : 'New User'}
+                      </Button>
+                    </div>
+                  </FormControl>
                 </Grid>
               </Grid>
             </Form>

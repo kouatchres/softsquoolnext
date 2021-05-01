@@ -126,7 +126,12 @@ const CreateDivision = ({ regions }: AllRegionsQuery) => {
                 justify="center"
               >
                 <Grid item>
-                  <Grid container direction="row" justify="center">
+                  <Grid container direction="row" justify="center" alignItems="center"
+                style={{
+                  backgroundColor: '#ede6b9',
+                  borderRadius: '0.2rem',
+                  paddingTop: '0.2rem'
+                }}>
                     <Grid item>
                       <Typography
                         color="primary"

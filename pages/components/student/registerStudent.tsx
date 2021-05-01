@@ -1,6 +1,5 @@
 import React, { useState, ChangeEvent, FC } from 'react';
 import { ErrorMessage, Formik, Form, Field } from 'formik';
-
 import { TextField, Select } from 'material-ui-formik-components';
 import {
   Grid,
@@ -15,16 +14,16 @@ import * as Yup from 'yup';
 import Notification from 'utils/Notification';
 import {
   SchoolYear,
-  SingleProfByMatriculeDocument,
-  SingleSectionDocument,
-  useSingleSectionLazyQuery,
-  useCreateAnnProfDeptMutation,
-  AllAnnProfDeptsDocument,
-  AnnProfDeptCreateInput,
+  SingleStudentByMatriculeDocument,
+  SingleSectionForClassroomsDocument,
+  useSingleSectionForClassroomsLazyQuery,
+  useCreateAnnStudentClassroomMutation,
+  AllAnnStudentClassroomDocument,
+  AnnStudentClassroomCreateInput,
   SingleSchoolByPublicCodeDocument,
   AllSchoolYearsQuery,
   useSingleSchoolByPublicCodeLazyQuery,
-  useSingleProfByMatriculeLazyQuery
+  useSingleStudentByMatriculeLazyQuery
 } from '../../../generated/graphql';
 import { IOptions } from '../interfaces';
 import { PrismaClient } from '@prisma/client';
@@ -49,10 +48,10 @@ const validationSchema = Yup.object().shape({
   // subjectCode: Yup.string().required('Code département Obligatoire')
 });
 
-const registerProf = ({ schoolYears }: AllSchoolYearsQuery) => {
+const registerStudent = ({ schoolYears }: AllSchoolYearsQuery) => {
   const classes = useStyles();
 
-  const [departmentID, setDepartmentID] = useState<string>('');
+  const [classroomID, setClassroomID] = useState<string>('');
 
   const [schoolYearID, setSchoolYearID] = useState<string>('');
 
@@ -87,36 +86,36 @@ const registerProf = ({ schoolYears }: AllSchoolYearsQuery) => {
       : [];
   console.log({ sectionsOptions });
 
-  // get one section to obtain all the depts
+  // get one section  and subsequently all its classrooms
   const [
-    SingleSectionQuery,
+    SingleSectionForClassroomsQuery,
     { data: dataSection, loading: loadingSection }
-  ] = useSingleSectionLazyQuery({
-    query: SingleSectionDocument
+  ] = useSingleSectionForClassroomsLazyQuery({
+    query: SingleSectionForClassroomsDocument
   });
 
-  const deptsOptions: IOptions[] =
-    dataSection?.section && dataSection?.section?.departments
-      ? dataSection?.section?.departments?.map(department => ({
-          value: department?.id,
-          label: department?.deptName
+  const classroomsOptions: IOptions[] =
+    dataSection?.sectionForClasses && dataSection?.sectionForClasses?.classrooms
+      ? dataSection?.sectionForClasses?.classrooms?.map(classroom => ({
+          value: classroom?.id,
+          label: classroom?.className
         }))
       : [];
-  console.log({ deptsOptions });
+  console.log({ classroomsOptions });
 
-  // get prof matricule to obtain their id
+  // get Student matricule to obtain their id
   const [
-    SingleProfByMatriculeQuery,
-    { data: dataProf }
-  ] = useSingleProfByMatriculeLazyQuery({
-    query: SingleProfByMatriculeDocument
+    SingleStudentByMatriculeQuery,
+    { data: dataStudent }
+  ] = useSingleStudentByMatriculeLazyQuery({
+    query: SingleStudentByMatriculeDocument
   });
 
-  const getprofId =
-    dataProf && dataProf?.profByMatricule
-      ? dataProf?.profByMatricule
-      : { id: '' };
-  console.log({ getprofId });
+  const getStudentId =
+    dataStudent && dataStudent?.studentByMatricule
+      ? dataStudent?.studentByMatricule
+      : { id: '', student1stName: '', student2ndName: '', student3rdName: '' };
+  console.log({ getStudentId });
 
   const [notify, setNotify] = useState({
     isOpen: false,
@@ -124,15 +123,19 @@ const registerProf = ({ schoolYears }: AllSchoolYearsQuery) => {
     type: ''
   });
 
-  const initialValues: AnnProfDeptCreateInput = {
+  const initialValues: AnnStudentClassroomCreateInput = {
     SchoolYear: {},
-    Prof: {},
-    Department: {}
+    Student: {},
+    Classroom: {}
   };
-  const [createAnnProfDeptMutation] = useCreateAnnProfDeptMutation();
+  const [
+    createAnnStudentClassroomMutation
+  ] = useCreateAnnStudentClassroomMutation();
 
-  const handleDeptSelectChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setDepartmentID(event.target.value);
+  const handleClassroomSelectChange = (
+    event: ChangeEvent<HTMLInputElement>
+  ) => {
+    setClassroomID(event.target.value);
   };
 
   const handleYearSelectChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -144,30 +147,30 @@ const registerProf = ({ schoolYears }: AllSchoolYearsQuery) => {
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={async (
-        values: AnnProfDeptCreateInput,
+        values: AnnStudentClassroomCreateInput,
         { setSubmitting, resetForm }
       ) => {
-        const res = await createAnnProfDeptMutation({
+        const res = await createAnnStudentClassroomMutation({
           variables: {
             data: {
               ...values,
-              Department: { connect: { id: departmentID } },
-              Prof: { connect: { id: getprofId.id } },
+              Classroom: { connect: { id: classroomID } },
+              Student: { connect: { id: getStudentId.id } },
               SchoolYear: { connect: { id: schoolYearID } }
             }
           },
           update: (cache: any, { data }) => {
-            const currentAnnProfDeptList = cache.readQuery({
-              query: AllAnnProfDeptsDocument
-            }) ?? { annProfDept: [] };
-            const addedAnnProfDept = data?.createOneAnnProfDept;
-            if (addedAnnProfDept) {
+            const currentAnnStudentClassroomList = cache.readQuery({
+              query: AllAnnStudentClassroomDocument
+            }) ?? { annStudentClassroom: [] };
+            const addedAnnStudentClassroom = data?.createOneAnnStudentClassroom;
+            if (addedAnnStudentClassroom) {
               cache.writeQuery({
-                query: AllAnnProfDeptsDocument,
+                query: AllAnnStudentClassroomDocument,
                 data: {
-                  annProfDept: [
-                    ...currentAnnProfDeptList.annProfDept,
-                    addedAnnProfDept
+                  annStudentClassroom: [
+                    ...currentAnnStudentClassroomList.annStudentClassroom,
+                    addedAnnStudentClassroom
                   ]
                 }
               });
@@ -201,9 +204,9 @@ const registerProf = ({ schoolYears }: AllSchoolYearsQuery) => {
                 justify="center"
                 alignItems="center"
                 style={{
-                  paddingTop: '0.2rem',
                   backgroundColor: '#ede6b9',
-                  borderRadius: '0.2rem'
+                  borderRadius: '0.2rem',
+                  paddingTop: '0.2rem'
                 }}
               >
                 <Grid item>
@@ -213,7 +216,7 @@ const registerProf = ({ schoolYears }: AllSchoolYearsQuery) => {
                     variant="body2"
                     component="h6"
                   >
-                    Prof Yearly Dept
+                    Register students
                   </Typography>
                 </Grid>
               </Grid>
@@ -222,14 +225,14 @@ const registerProf = ({ schoolYears }: AllSchoolYearsQuery) => {
                   <Grid container direction="column">
                     <Grid item>
                       <Field
-                        name="sectionName"
+                        name="SchoolName"
                         component={TextField}
                         type="text"
                         value={schoolName || ''}
                         label="Nom de l'etablissement"
                         variant="outlined"
                         disabled
-                        helpertext={<ErrorMessage name="sectionName" />}
+                        helpertext={<ErrorMessage name="SchoolName" />}
                       />
 
                       <Field
@@ -273,50 +276,60 @@ const registerProf = ({ schoolYears }: AllSchoolYearsQuery) => {
                         variant="outlined"
                         disabled={isSubmitting || !data}
                         onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                          SingleSectionQuery({
+                          SingleSectionForClassroomsQuery({
                             variables: { id: event.target.value }
                           });
                         }}
                         helpertext={<ErrorMessage name="sectionID" />}
                       />
                       <Field
-                        name="departmentID"
+                        name="classroomID"
                         component={Select}
                         type="text"
                         autoFocus={true}
-                        options={deptsOptions}
-                        label="Choose department"
+                        options={classroomsOptions}
+                        label="Choose classroom"
                         variant="outlined"
                         disabled={isSubmitting || loadingSection}
                         onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                          handleDeptSelectChange(event);
+                          handleClassroomSelectChange(event);
                         }}
-                        helpertext={<ErrorMessage name="departmentID" />}
+                        helpertext={<ErrorMessage name="classroomID" />}
                       />
                       <Field
-                        name="profMatricule"
+                        name="StudentMatricule"
                         component={TextField}
                         type="text"
-                        label="Prof Matricule"
+                        label="Student Matricule"
                         variant="outlined"
                         disabled={isSubmitting}
-                        helpertext={<ErrorMessage name="profMatricule" />}
+                        helpertext={<ErrorMessage name="StudentMatricule" />}
                         onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                          SingleProfByMatriculeQuery({
+                          SingleStudentByMatriculeQuery({
                             variables: {
-                              profMatricule: event.target.value
+                              studentMatricule: event.target.value
                             }
                           });
                         }}
                       />
-
+                      <Field
+                        name="studentName"
+                        component={TextField}
+                        type="text"
+                        value={
+                          `${getStudentId.student1stName} ${getStudentId.student2ndName} ${getStudentId.student3rdName}` ||
+                          ''
+                        }
+                        label="Student Name"
+                        variant="outlined"
+                        disabled
+                        helpertext={<ErrorMessage name="studentName" />}
+                      />
                       <Notification notify={notify} setNotify={setNotify} />
                       <div style={{ placeItems: 'center', display: 'grid' }}>
                         <Button disabled={isSubmitting} onClick={submitForm}>
                           {isSubmitting && <CircularProgress />}
-                          {isSubmitting
-                            ? 'Creating AnnProfDept'
-                            : 'Prof yearly dept'}
+                          {isSubmitting ? 'Registering' : 'Register student'}
                         </Button>
                       </div>
                     </Grid>
@@ -342,4 +355,4 @@ export const getStaticProps: GetStaticProps = async () => {
   const schoolYears = JSON.parse(stringifiedData);
   return { props: { schoolYears } };
 };
-export default registerProf;
+export default registerStudent;
