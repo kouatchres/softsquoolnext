@@ -16,5 +16,15 @@ export const Section = objectType({
           .department();
       }
     });
+    t.list.field('classrooms', {
+      type: 'Classroom',
+      resolve: async (parent, _, { prisma }) => {
+        return await prisma.section
+          .findOne({
+            where: { id: parent.id }
+          })
+          .classroom();
+      }
+    });
   }
 });

@@ -208,6 +208,20 @@ const Query = queryType({
       }
     });
 
+
+    t.field('sectionForClasses', {
+      type: 'Section',
+      args: {
+        id: stringArg()
+      },
+      resolve: async (_parent, { id }, { prisma }) => {
+        return await prisma.section.findOne({ where: { id: String(id) } });
+      }
+    });
+
+
+
+
     t.list.field('annProfDepts', {
       type: 'AnnProfDept',
       resolve: async (_parent, _args, { prisma }) => {
@@ -364,6 +378,30 @@ const Query = queryType({
       }
     });
 
+    t.field('studentBySecretCode', {
+      type: 'Student',
+      args: {
+        studentSecretCode: stringArg()
+      },
+      resolve: async (_parent, { studentSecretCode }, { prisma }) => {
+        return await prisma.student.findOne({
+          where: { studentSecretCode: String(studentSecretCode) }
+        });
+      }
+    });
+
+    t.field('studentByMatricule', {
+      type: 'Student',
+      args: {
+        studentMatricule: stringArg()
+      },
+      resolve: async (_parent, { studentMatricule }, { prisma }) => {
+        return await prisma.student.findOne({
+          where: { studentMatricule: String(studentMatricule) }
+        });
+      }
+    });
+
     t.list.field('subjects', {
       type: 'Subject',
       resolve: async (_parent, _args, { prisma }) => {
@@ -483,4 +521,3 @@ const Query = queryType({
   }
 });
 export default Query;
-

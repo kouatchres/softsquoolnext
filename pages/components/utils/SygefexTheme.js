@@ -259,16 +259,15 @@ const SygefexTheme = createMuiTheme({
     },
     MuiGrid: {
       root: {
-        alignItems: 'center',
-        justifyItems: 'center'
-        // margin: '0.2rem'
+        marginBottom: '0.2rem'
       }
+      // container: {
+      //   alignItems: 'center',
+      //   justifyItems: 'center'
+      // }
     },
 
     MuiPaper: {
-      // root: {
-
-      // },
       rounded: {
         elevation: 5,
         borderRadius: '0.4rem',

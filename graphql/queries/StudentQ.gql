@@ -1,10 +1,25 @@
 #import from "../fragments/StudentFragment.gql"
 
+query AllStudents {
+  students {
+    ...StudentFragment
+  }
+}
 
-  query AllStudents {
-    students {
-
-      ...StudentFragment
+query SingleStudentBySecretCode($studentSecretCode: String!) {
+  studentBySecretCode(studentSecretCode: $studentSecretCode) {
+    ...StudentFragment
+    annStudentClassroom {
+      id
     }
   }
+}
 
+query SingleStudentByMatricule($studentMatricule: String!) {
+  studentByMatricule(studentMatricule: $studentMatricule) {
+    ...StudentFragment
+    annStudentClassroom {
+      id
+    }
+  }
+}

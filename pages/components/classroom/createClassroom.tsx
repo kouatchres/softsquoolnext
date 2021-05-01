@@ -1,8 +1,6 @@
-import React, { useState, useEffect, ChangeEvent, FC } from 'react';
+import React, { useState, ChangeEvent } from 'react';
 import { ErrorMessage, Formik, Form, Field } from 'formik';
-
-import { TextField } from 'material-ui-formik-components/TextField';
-import { Select } from 'material-ui-formik-components/Select';
+import { TextField, Select } from 'material-ui-formik-components';
 import {
   Grid,
   Typography,
@@ -18,8 +16,8 @@ import {
   useCreateClassroomMutation,
   AllClassroomsDocument,
   ClassroomCreateInput,
-  SingleSchoolBySecretCodeDocument,
-  useSingleSchoolBySecretCodeLazyQuery
+  SingleSchoolByPublicCodeDocument,
+  useSingleSchoolByPublicCodeLazyQuery
 } from '../../../generated/graphql';
 import { IOptions } from '../interfaces';
 
@@ -46,22 +44,22 @@ const createClassroom = () => {
   const [sectionID, setSectionID] = useState<string>('');
 
   const [
-    SingleSchoolBySchoolSecretCodeQuery,
+    SingleSchoolBySchoolPublicCodeQuery,
     { data, loading, error }
-  ] = useSingleSchoolBySecretCodeLazyQuery({
-    query: SingleSchoolBySecretCodeDocument
+  ] = useSingleSchoolByPublicCodeLazyQuery({
+    query: SingleSchoolByPublicCodeDocument
   });
 
   console.log({ data });
 
   const { schoolName } =
-    data && data.schoolBySecretCode
-      ? data.schoolBySecretCode
+    data && data.schoolByPublicCode
+      ? data.schoolByPublicCode
       : { schoolName: '' };
 
   const sectionsOptions: IOptions[] =
-    data?.schoolBySecretCode && data?.schoolBySecretCode?.sections
-      ? data?.schoolBySecretCode?.sections?.map(section => ({
+    data?.schoolByPublicCode && data?.schoolByPublicCode?.sections
+      ? data?.schoolByPublicCode?.sections?.map(section => ({
           value: section?.id,
           label: section?.sectionName
         }))
@@ -138,100 +136,102 @@ const createClassroom = () => {
           <Paper className={classes.pageStyled}>
             <Form aria-busy={isSubmitting}>
               {isSubmitting && <LinearProgress />}
+
               <Grid
-                direction="column"
                 container
+                direction="row"
                 alignItems="center"
                 justify="center"
+                style={{
+                  backgroundColor: '#ede6b9',
+                  borderRadius: '0.2rem',
+                  paddingTop: '0.2rem'
+                }}
               >
                 <Grid item>
-                  <Grid container direction="row" justify="center">
-                    <Grid item>
-                      <Typography
-                        color="primary"
-                        gutterBottom
-                        variant="body2"
-                        component="h6"
-                      >
-                        New Classroom
-                      </Typography>
-                    </Grid>
-                  </Grid>
+                  <Typography
+                    color="primary"
+                    gutterBottom
+                    variant="body2"
+                    component="h6"
+                  >
+                    New Classroom
+                  </Typography>
                 </Grid>
-                <Grid container spacing={5} direction="row">
-                  <Grid item sm={12}>
-                    <Grid container direction="column">
-                      <Grid item>
-                        <Field
-                          name="sectionName"
-                          component={TextField}
-                          type="text"
-                          value={schoolName || ''}
-                          label="Section Name"
-                          variant="outlined"
-                          disabled={isSubmitting}
-                          helpertext={<ErrorMessage name="sectionName" />}
-                        />
+              </Grid>
+              <Grid container spacing={5} direction="row">
+                <Grid item sm={12}>
+                  <Grid container direction="column">
+                    <Grid item>
+                      <Field
+                        name="School Name"
+                        component={TextField}
+                        type="text"
+                        value={schoolName || ''}
+                        label="Section Name"
+                        variant="outlined"
+                        disabled
+                        helpertext={<ErrorMessage name="School Name" />}
+                      />
 
-                        <Field
-                          name="schoolSecret"
-                          component={TextField}
-                          type="text"
-                          label="School secret Code"
-                          variant="outlined"
-                          disabled={isSubmitting}
-                          onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                            SingleSchoolBySchoolSecretCodeQuery({
-                              variables: {
-                                schoolSecretCode: event.target.value
-                              }
-                            });
-                          }}
-                          helpertext={<ErrorMessage name="schoolSecret" />}
-                        />
+                      <Field
+                        name="schoolPublicCode"
+                        component={TextField}
+                        type="text"
+                        label="School public Code"
+                        variant="outlined"
+                        disabled={isSubmitting}
+                        onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                          SingleSchoolBySchoolPublicCodeQuery({
+                            variables: {
+                              schoolPublicCode: event.target.value
+                            }
+                          });
+                        }}
+                        helpertext={<ErrorMessage name="schoolPublicCode" />}
+                      />
 
-                        <Field
-                          name="sectionID"
-                          component={Select}
-                          type="text"
-                          autoFocus={true}
-                          options={sectionsOptions}
-                          label="Choix de section"
-                          variant="outlined"
-                          disabled={isSubmitting}
-                          onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                            handleSelectChange(event);
-                          }}
-                          helpertext={<ErrorMessage name="sectionID" />}
-                        />
-                        <Field
-                          name="className"
-                          component={TextField}
-                          type="text"
-                          label="Libellé département"
-                          variant="outlined"
-                          disabled={isSubmitting}
-                          helpertext={<ErrorMessage name="className" />}
-                        />
-                        <Field
-                          name="classCode"
-                          component={TextField}
-                          type="text"
-                          label="Code département"
-                          variant="outlined"
-                          disabled={isSubmitting}
-                          helpertext={<ErrorMessage name="classCode" />}
-                        />
-                        <Notification notify={notify} setNotify={setNotify} />
-                        <div style={{ placeItems: 'center', display: 'grid' }}>
-                          <Button disabled={isSubmitting} onClick={submitForm}>
-                            {isSubmitting && <CircularProgress />}
-                            {isSubmitting
-                              ? 'Creating Classroom'
-                              : 'New Classroom'}
-                          </Button>
-                        </div>
-                      </Grid>
+                      <Field
+                        name="sectionID"
+                        component={Select}
+                        type="text"
+                        autoFocus={true}
+                        options={sectionsOptions}
+                        label="Section"
+                        variant="outlined"
+                        disabled={isSubmitting}
+                        onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                          handleSelectChange(event);
+                        }}
+                        helpertext={<ErrorMessage name="sectionID" />}
+                      />
+                      <Field
+                        name="className"
+                        component={TextField}
+                        type="text"
+                        label="Class Name"
+                        variant="outlined"
+                        disabled={isSubmitting}
+                        helpertext={<ErrorMessage name="className" />}
+                      />
+                      <Field
+                        name="classCode"
+                        component={TextField}
+                        type="text"
+                        label="Class code"
+                        variant="outlined"
+                        disabled={isSubmitting}
+                        helpertext={<ErrorMessage name="classCode" />}
+                      />
+                      <Notification notify={notify} setNotify={setNotify} />
+                      <div style={{ placeItems: 'center', display: 'grid' }}>
+                        <Button disabled={isSubmitting} onClick={submitForm}>
+                          {isSubmitting && <CircularProgress />}
+                          {isSubmitting
+                            ? 'Creating Classroom'
+                            : 'New Classroom'}
+                        </Button>
+                      </div>
                     </Grid>
                   </Grid>
                 </Grid>

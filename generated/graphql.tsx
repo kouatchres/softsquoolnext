@@ -71,6 +71,7 @@ export type Section = {
   sectionName: Scalars['String'];
   sectionCode: Scalars['String'];
   departments?: Maybe<Array<Maybe<Department>>>;
+  classrooms?: Maybe<Array<Maybe<Classroom>>>;
 };
 
 export type Department = {
@@ -189,6 +190,7 @@ export type Query = {
   region?: Maybe<Region>;
   sections?: Maybe<Array<Maybe<Section>>>;
   section?: Maybe<Section>;
+  sectionForClasses?: Maybe<Section>;
   annProfDepts?: Maybe<Array<Maybe<AnnProfDept>>>;
   annProfDept?: Maybe<AnnProfDept>;
   annProfSubjDistros?: Maybe<Array<Maybe<AnnProfSubjDistro>>>;
@@ -205,6 +207,8 @@ export type Query = {
   sequence?: Maybe<Sequence>;
   students?: Maybe<Array<Maybe<Student>>>;
   student?: Maybe<Student>;
+  studentBySecretCode?: Maybe<Student>;
+  studentByMatricule?: Maybe<Student>;
   subjects?: Maybe<Array<Maybe<Subject>>>;
   subject?: Maybe<Subject>;
   terms?: Maybe<Array<Maybe<Term>>>;
@@ -274,6 +278,11 @@ export type QuerySectionArgs = {
 };
 
 
+export type QuerySectionForClassesArgs = {
+  id?: Maybe<Scalars['String']>;
+};
+
+
 export type QueryAnnProfDeptArgs = {
   id?: Maybe<Scalars['String']>;
 };
@@ -311,6 +320,16 @@ export type QuerySequenceArgs = {
 
 export type QueryStudentArgs = {
   id?: Maybe<Scalars['String']>;
+};
+
+
+export type QueryStudentBySecretCodeArgs = {
+  studentSecretCode?: Maybe<Scalars['String']>;
+};
+
+
+export type QueryStudentByMatriculeArgs = {
+  studentMatricule?: Maybe<Scalars['String']>;
 };
 
 
@@ -1553,6 +1572,7 @@ export type StudentCreateInput = {
 export type StudentWhereUniqueInput = {
   id?: Maybe<Scalars['String']>;
   studentSecretCode?: Maybe<Scalars['String']>;
+  studentMatricule?: Maybe<Scalars['String']>;
 };
 
 export type StudentUpdateInput = {
@@ -4993,6 +5013,16 @@ export type SingleSectionQuery = { section?: Maybe<(
     & SectionFragmentFragment
   )> };
 
+export type SingleSectionForClassroomsQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type SingleSectionForClassroomsQuery = { sectionForClasses?: Maybe<(
+    { classrooms?: Maybe<Array<Maybe<ClassroomFragmentFragment>>> }
+    & SectionFragmentFragment
+  )> };
+
 export type AllSequencesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -5002,6 +5032,26 @@ export type AllStudentsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type AllStudentsQuery = { students?: Maybe<Array<Maybe<StudentFragmentFragment>>> };
+
+export type SingleStudentBySecretCodeQueryVariables = Exact<{
+  studentSecretCode: Scalars['String'];
+}>;
+
+
+export type SingleStudentBySecretCodeQuery = { studentBySecretCode?: Maybe<(
+    { annStudentClassroom?: Maybe<Array<Maybe<Pick<AnnStudentClassroom, 'id'>>>> }
+    & StudentFragmentFragment
+  )> };
+
+export type SingleStudentByMatriculeQueryVariables = Exact<{
+  studentMatricule: Scalars['String'];
+}>;
+
+
+export type SingleStudentByMatriculeQuery = { studentByMatricule?: Maybe<(
+    { annStudentClassroom?: Maybe<Array<Maybe<Pick<AnnStudentClassroom, 'id'>>>> }
+    & StudentFragmentFragment
+  )> };
 
 export type AllSubdivisionsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -8380,6 +8430,64 @@ export function useSingleSectionLazyQuery(baseOptions?: ApolloReactHooks.LazyQue
 export type SingleSectionQueryHookResult = ReturnType<typeof useSingleSectionQuery>;
 export type SingleSectionLazyQueryHookResult = ReturnType<typeof useSingleSectionLazyQuery>;
 export type SingleSectionQueryResult = Apollo.QueryResult<SingleSectionQuery, SingleSectionQueryVariables>;
+export const SingleSectionForClassroomsDocument = gql`
+    query SingleSectionForClassrooms($id: String!) {
+  sectionForClasses(id: $id) {
+    ...SectionFragment
+    classrooms {
+      ...ClassroomFragment
+    }
+  }
+}
+    ${SectionFragmentFragmentDoc}
+${ClassroomFragmentFragmentDoc}`;
+export type SingleSectionForClassroomsComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<SingleSectionForClassroomsQuery, SingleSectionForClassroomsQueryVariables>, 'query'> & ({ variables: SingleSectionForClassroomsQueryVariables; skip?: boolean; } | { skip: boolean; });
+
+    export const SingleSectionForClassroomsComponent = (props: SingleSectionForClassroomsComponentProps) => (
+      <ApolloReactComponents.Query<SingleSectionForClassroomsQuery, SingleSectionForClassroomsQueryVariables> query={SingleSectionForClassroomsDocument} {...props} />
+    );
+    
+export type SingleSectionForClassroomsProps<TChildProps = {}, TDataName extends string = 'data'> = {
+      [key in TDataName]: ApolloReactHoc.DataValue<SingleSectionForClassroomsQuery, SingleSectionForClassroomsQueryVariables>
+    } & TChildProps;
+export function withSingleSectionForClassrooms<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  SingleSectionForClassroomsQuery,
+  SingleSectionForClassroomsQueryVariables,
+  SingleSectionForClassroomsProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withQuery<TProps, SingleSectionForClassroomsQuery, SingleSectionForClassroomsQueryVariables, SingleSectionForClassroomsProps<TChildProps, TDataName>>(SingleSectionForClassroomsDocument, {
+      alias: 'singleSectionForClassrooms',
+      ...operationOptions
+    });
+};
+
+/**
+ * __useSingleSectionForClassroomsQuery__
+ *
+ * To run a query within a React component, call `useSingleSectionForClassroomsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSingleSectionForClassroomsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSingleSectionForClassroomsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useSingleSectionForClassroomsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<SingleSectionForClassroomsQuery, SingleSectionForClassroomsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<SingleSectionForClassroomsQuery, SingleSectionForClassroomsQueryVariables>(SingleSectionForClassroomsDocument, options);
+      }
+export function useSingleSectionForClassroomsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<SingleSectionForClassroomsQuery, SingleSectionForClassroomsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<SingleSectionForClassroomsQuery, SingleSectionForClassroomsQueryVariables>(SingleSectionForClassroomsDocument, options);
+        }
+export type SingleSectionForClassroomsQueryHookResult = ReturnType<typeof useSingleSectionForClassroomsQuery>;
+export type SingleSectionForClassroomsLazyQueryHookResult = ReturnType<typeof useSingleSectionForClassroomsLazyQuery>;
+export type SingleSectionForClassroomsQueryResult = Apollo.QueryResult<SingleSectionForClassroomsQuery, SingleSectionForClassroomsQueryVariables>;
 export const AllSequencesDocument = gql`
     query AllSequences {
   sequences {
@@ -8486,6 +8594,120 @@ export function useAllStudentsLazyQuery(baseOptions?: ApolloReactHooks.LazyQuery
 export type AllStudentsQueryHookResult = ReturnType<typeof useAllStudentsQuery>;
 export type AllStudentsLazyQueryHookResult = ReturnType<typeof useAllStudentsLazyQuery>;
 export type AllStudentsQueryResult = Apollo.QueryResult<AllStudentsQuery, AllStudentsQueryVariables>;
+export const SingleStudentBySecretCodeDocument = gql`
+    query SingleStudentBySecretCode($studentSecretCode: String!) {
+  studentBySecretCode(studentSecretCode: $studentSecretCode) {
+    ...StudentFragment
+    annStudentClassroom {
+      id
+    }
+  }
+}
+    ${StudentFragmentFragmentDoc}`;
+export type SingleStudentBySecretCodeComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<SingleStudentBySecretCodeQuery, SingleStudentBySecretCodeQueryVariables>, 'query'> & ({ variables: SingleStudentBySecretCodeQueryVariables; skip?: boolean; } | { skip: boolean; });
+
+    export const SingleStudentBySecretCodeComponent = (props: SingleStudentBySecretCodeComponentProps) => (
+      <ApolloReactComponents.Query<SingleStudentBySecretCodeQuery, SingleStudentBySecretCodeQueryVariables> query={SingleStudentBySecretCodeDocument} {...props} />
+    );
+    
+export type SingleStudentBySecretCodeProps<TChildProps = {}, TDataName extends string = 'data'> = {
+      [key in TDataName]: ApolloReactHoc.DataValue<SingleStudentBySecretCodeQuery, SingleStudentBySecretCodeQueryVariables>
+    } & TChildProps;
+export function withSingleStudentBySecretCode<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  SingleStudentBySecretCodeQuery,
+  SingleStudentBySecretCodeQueryVariables,
+  SingleStudentBySecretCodeProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withQuery<TProps, SingleStudentBySecretCodeQuery, SingleStudentBySecretCodeQueryVariables, SingleStudentBySecretCodeProps<TChildProps, TDataName>>(SingleStudentBySecretCodeDocument, {
+      alias: 'singleStudentBySecretCode',
+      ...operationOptions
+    });
+};
+
+/**
+ * __useSingleStudentBySecretCodeQuery__
+ *
+ * To run a query within a React component, call `useSingleStudentBySecretCodeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSingleStudentBySecretCodeQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSingleStudentBySecretCodeQuery({
+ *   variables: {
+ *      studentSecretCode: // value for 'studentSecretCode'
+ *   },
+ * });
+ */
+export function useSingleStudentBySecretCodeQuery(baseOptions: ApolloReactHooks.QueryHookOptions<SingleStudentBySecretCodeQuery, SingleStudentBySecretCodeQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<SingleStudentBySecretCodeQuery, SingleStudentBySecretCodeQueryVariables>(SingleStudentBySecretCodeDocument, options);
+      }
+export function useSingleStudentBySecretCodeLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<SingleStudentBySecretCodeQuery, SingleStudentBySecretCodeQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<SingleStudentBySecretCodeQuery, SingleStudentBySecretCodeQueryVariables>(SingleStudentBySecretCodeDocument, options);
+        }
+export type SingleStudentBySecretCodeQueryHookResult = ReturnType<typeof useSingleStudentBySecretCodeQuery>;
+export type SingleStudentBySecretCodeLazyQueryHookResult = ReturnType<typeof useSingleStudentBySecretCodeLazyQuery>;
+export type SingleStudentBySecretCodeQueryResult = Apollo.QueryResult<SingleStudentBySecretCodeQuery, SingleStudentBySecretCodeQueryVariables>;
+export const SingleStudentByMatriculeDocument = gql`
+    query SingleStudentByMatricule($studentMatricule: String!) {
+  studentByMatricule(studentMatricule: $studentMatricule) {
+    ...StudentFragment
+    annStudentClassroom {
+      id
+    }
+  }
+}
+    ${StudentFragmentFragmentDoc}`;
+export type SingleStudentByMatriculeComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<SingleStudentByMatriculeQuery, SingleStudentByMatriculeQueryVariables>, 'query'> & ({ variables: SingleStudentByMatriculeQueryVariables; skip?: boolean; } | { skip: boolean; });
+
+    export const SingleStudentByMatriculeComponent = (props: SingleStudentByMatriculeComponentProps) => (
+      <ApolloReactComponents.Query<SingleStudentByMatriculeQuery, SingleStudentByMatriculeQueryVariables> query={SingleStudentByMatriculeDocument} {...props} />
+    );
+    
+export type SingleStudentByMatriculeProps<TChildProps = {}, TDataName extends string = 'data'> = {
+      [key in TDataName]: ApolloReactHoc.DataValue<SingleStudentByMatriculeQuery, SingleStudentByMatriculeQueryVariables>
+    } & TChildProps;
+export function withSingleStudentByMatricule<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  SingleStudentByMatriculeQuery,
+  SingleStudentByMatriculeQueryVariables,
+  SingleStudentByMatriculeProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withQuery<TProps, SingleStudentByMatriculeQuery, SingleStudentByMatriculeQueryVariables, SingleStudentByMatriculeProps<TChildProps, TDataName>>(SingleStudentByMatriculeDocument, {
+      alias: 'singleStudentByMatricule',
+      ...operationOptions
+    });
+};
+
+/**
+ * __useSingleStudentByMatriculeQuery__
+ *
+ * To run a query within a React component, call `useSingleStudentByMatriculeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSingleStudentByMatriculeQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSingleStudentByMatriculeQuery({
+ *   variables: {
+ *      studentMatricule: // value for 'studentMatricule'
+ *   },
+ * });
+ */
+export function useSingleStudentByMatriculeQuery(baseOptions: ApolloReactHooks.QueryHookOptions<SingleStudentByMatriculeQuery, SingleStudentByMatriculeQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<SingleStudentByMatriculeQuery, SingleStudentByMatriculeQueryVariables>(SingleStudentByMatriculeDocument, options);
+      }
+export function useSingleStudentByMatriculeLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<SingleStudentByMatriculeQuery, SingleStudentByMatriculeQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<SingleStudentByMatriculeQuery, SingleStudentByMatriculeQueryVariables>(SingleStudentByMatriculeDocument, options);
+        }
+export type SingleStudentByMatriculeQueryHookResult = ReturnType<typeof useSingleStudentByMatriculeQuery>;
+export type SingleStudentByMatriculeLazyQueryHookResult = ReturnType<typeof useSingleStudentByMatriculeLazyQuery>;
+export type SingleStudentByMatriculeQueryResult = Apollo.QueryResult<SingleStudentByMatriculeQuery, SingleStudentByMatriculeQueryVariables>;
 export const AllSubdivisionsDocument = gql`
     query AllSubdivisions {
   subdivisions {
@@ -9977,6 +10199,7 @@ export type SectionResolvers<ContextType = any, ParentType extends ResolversPare
   sectionName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   sectionCode?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   departments?: Resolver<Maybe<Array<Maybe<ResolversTypes['Department']>>>, ParentType, ContextType>;
+  classrooms?: Resolver<Maybe<Array<Maybe<ResolversTypes['Classroom']>>>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -10109,6 +10332,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   region?: Resolver<Maybe<ResolversTypes['Region']>, ParentType, ContextType, RequireFields<QueryRegionArgs, never>>;
   sections?: Resolver<Maybe<Array<Maybe<ResolversTypes['Section']>>>, ParentType, ContextType>;
   section?: Resolver<Maybe<ResolversTypes['Section']>, ParentType, ContextType, RequireFields<QuerySectionArgs, never>>;
+  sectionForClasses?: Resolver<Maybe<ResolversTypes['Section']>, ParentType, ContextType, RequireFields<QuerySectionForClassesArgs, never>>;
   annProfDepts?: Resolver<Maybe<Array<Maybe<ResolversTypes['AnnProfDept']>>>, ParentType, ContextType>;
   annProfDept?: Resolver<Maybe<ResolversTypes['AnnProfDept']>, ParentType, ContextType, RequireFields<QueryAnnProfDeptArgs, never>>;
   annProfSubjDistros?: Resolver<Maybe<Array<Maybe<ResolversTypes['AnnProfSubjDistro']>>>, ParentType, ContextType>;
@@ -10125,6 +10349,8 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   sequence?: Resolver<Maybe<ResolversTypes['Sequence']>, ParentType, ContextType, RequireFields<QuerySequenceArgs, never>>;
   students?: Resolver<Maybe<Array<Maybe<ResolversTypes['Student']>>>, ParentType, ContextType>;
   student?: Resolver<Maybe<ResolversTypes['Student']>, ParentType, ContextType, RequireFields<QueryStudentArgs, never>>;
+  studentBySecretCode?: Resolver<Maybe<ResolversTypes['Student']>, ParentType, ContextType, RequireFields<QueryStudentBySecretCodeArgs, never>>;
+  studentByMatricule?: Resolver<Maybe<ResolversTypes['Student']>, ParentType, ContextType, RequireFields<QueryStudentByMatriculeArgs, never>>;
   subjects?: Resolver<Maybe<Array<Maybe<ResolversTypes['Subject']>>>, ParentType, ContextType>;
   subject?: Resolver<Maybe<ResolversTypes['Subject']>, ParentType, ContextType, RequireFields<QuerySubjectArgs, never>>;
   terms?: Resolver<Maybe<Array<Maybe<ResolversTypes['Term']>>>, ParentType, ContextType>;

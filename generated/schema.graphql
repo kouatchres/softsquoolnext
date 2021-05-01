@@ -2122,10 +2122,13 @@ type Query {
   score(id: String): Score
   scores: [Score]
   section(id: String): Section
+  sectionForClasses(id: String): Section
   sections: [Section]
   sequence(id: String): Sequence
   sequences: [Sequence]
   student(id: String): Student
+  studentByMatricule(studentMatricule: String): Student
+  studentBySecretCode(studentSecretCode: String): Student
   students: [Student]
   subdivision(id: String): Subdivision
   subdivisions: [Subdivision]
@@ -2787,6 +2790,7 @@ input ScoreWhereUniqueInput {
 }
 
 type Section {
+  classrooms: [Classroom]
   departments: [Department]
   id: String!
   sectionCode: String!
@@ -3346,6 +3350,7 @@ input StudentWhereInput {
 
 input StudentWhereUniqueInput {
   id: String
+  studentMatricule: String
   studentSecretCode: String
 }
 

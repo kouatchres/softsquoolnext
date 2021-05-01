@@ -287,7 +287,7 @@ const CreateProf: FC<ProfCreateInput> = () => {
               <Notification notify={notify} setNotify={setNotify} />
 
               <Grid container direction="row">
-                <Grid item xs={12} justify="center">
+                <Grid item xs={12} >
                   <div style={{ display: 'grid', placeItems: 'center' }}>
                     <Button disabled={isSubmitting} onClick={submitForm}>
                       {isSubmitting && <CircularProgress />}

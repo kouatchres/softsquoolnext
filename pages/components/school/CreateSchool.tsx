@@ -189,7 +189,17 @@ const CreateSchool = ({ regions }: AllRegionsQuery) => {
                 justify="center"
               >
                 <Grid item>
-                  <Grid container direction="row" justify="center">
+                  <Grid
+                    container
+                    direction="row"
+                    justify="center"
+                    alignItems="center"
+                    style={{
+                      paddingTop: '0.2rem',
+                      backgroundColor: '#ede6b9',
+                      borderRadius: '0.2rem'
+                    }}
+                  >
                     <Grid item>
                       <Typography
                         color="primary"

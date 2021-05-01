@@ -16,7 +16,8 @@
     "activityBar.activeBackground": "#08f1e2",
     "editorCursor.background": "#000",
     "editorCursor.foreground": "#d17f05"
-  }
+  },
+  "editor.quickSuggestions": null
   //   "workbench.colorCustomizations": {
   //       "activityBar.background": "#591218",
   //       "titleBar.activeBackground": "#7D1A21",

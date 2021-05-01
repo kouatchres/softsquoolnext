@@ -2732,6 +2732,7 @@ export interface NexusGenInputs {
   }
   StudentWhereUniqueInput: { // input type
     id?: string | null; // String
+    studentMatricule?: string | null; // String
     studentSecretCode?: string | null; // String
   }
   SubdivisionCreateInput: { // input type
@@ -4022,10 +4023,13 @@ export interface NexusGenFieldTypes {
     score: NexusGenRootTypes['Score'] | null; // Score
     scores: Array<NexusGenRootTypes['Score'] | null> | null; // [Score]
     section: NexusGenRootTypes['Section'] | null; // Section
+    sectionForClasses: NexusGenRootTypes['Section'] | null; // Section
     sections: Array<NexusGenRootTypes['Section'] | null> | null; // [Section]
     sequence: NexusGenRootTypes['Sequence'] | null; // Sequence
     sequences: Array<NexusGenRootTypes['Sequence'] | null> | null; // [Sequence]
     student: NexusGenRootTypes['Student'] | null; // Student
+    studentByMatricule: NexusGenRootTypes['Student'] | null; // Student
+    studentBySecretCode: NexusGenRootTypes['Student'] | null; // Student
     students: Array<NexusGenRootTypes['Student'] | null> | null; // [Student]
     subdivision: NexusGenRootTypes['Subdivision'] | null; // Subdivision
     subdivisions: Array<NexusGenRootTypes['Subdivision'] | null> | null; // [Subdivision]
@@ -4062,6 +4066,7 @@ export interface NexusGenFieldTypes {
     marks: string; // String!
   }
   Section: { // field return type
+    classrooms: Array<NexusGenRootTypes['Classroom'] | null> | null; // [Classroom]
     departments: Array<NexusGenRootTypes['Department'] | null> | null; // [Department]
     id: string; // String!
     sectionCode: string; // String!
@@ -4280,10 +4285,13 @@ export interface NexusGenFieldTypeNames {
     score: 'Score'
     scores: 'Score'
     section: 'Section'
+    sectionForClasses: 'Section'
     sections: 'Section'
     sequence: 'Sequence'
     sequences: 'Sequence'
     student: 'Student'
+    studentByMatricule: 'Student'
+    studentBySecretCode: 'Student'
     students: 'Student'
     subdivision: 'Subdivision'
     subdivisions: 'Subdivision'
@@ -4320,6 +4328,7 @@ export interface NexusGenFieldTypeNames {
     marks: 'String'
   }
   Section: { // field return type name
+    classrooms: 'Classroom'
     departments: 'Department'
     id: 'String'
     sectionCode: 'String'
@@ -4691,11 +4700,20 @@ export interface NexusGenArgTypes {
     section: { // args
       id?: string | null; // String
     }
+    sectionForClasses: { // args
+      id?: string | null; // String
+    }
     sequence: { // args
       id?: string | null; // String
     }
     student: { // args
       id?: string | null; // String
+    }
+    studentByMatricule: { // args
+      studentMatricule?: string | null; // String
+    }
+    studentBySecretCode: { // args
+      studentSecretCode?: string | null; // String
     }
     subdivision: { // args
       id?: string | null; // String

@@ -97,58 +97,56 @@ const NewRegion = ({ regions }: AllRegionsQuery) => {
           <Paper className={classes.pageStyled}>
             <Form aria-busy={isSubmitting}>
               {isSubmitting && <LinearProgress />}
+
               <Grid
-                direction="column"
                 container
-                alignItems="center"
+                direction="row"
                 justify="center"
+                alignItems="center"
+                style={{
+                  paddingTop: '0.2rem',
+                  backgroundColor: '#ede6b9',
+                  borderRadius: '0.2rem'
+                }}
               >
                 <Grid item>
-                  <Grid container direction="row" justify="center">
-                    <Grid item>
-                      <Typography
-                        color="primary"
-                        gutterBottom
-                        variant="body2"
-                        component="h6"
-                      >
-                        New region
-                      </Typography>
-                    </Grid>
-                  </Grid>
+                  <Typography
+                    color="primary"
+                    gutterBottom
+                    variant="body2"
+                    component="h6"
+                  >
+                    New region
+                  </Typography>
                 </Grid>
-                <Grid container spacing={5} direction="row">
-                  <Grid item sm={12}>
-                    <Grid container direction="column">
-                      <Grid item>
-                        <Field
-                          name="regName"
-                          component={TextField}
-                          type="text"
-                          label="Libellé Région"
-                          variant="outlined"
-                          disabled={isSubmitting}
-                          helpertext={<ErrorMessage name="regName" />}
-                        />
-                        <Field
-                          name="regCode"
-                          component={TextField}
-                          type="text"
-                          label="Code Région"
-                          variant="outlined"
-                          disabled={isSubmitting}
-                          helpertext={<ErrorMessage name="regCode" />}
-                        />
-                        <Notification notify={notify} setNotify={setNotify} />
-                        <div style={{ placeItems: 'center', display: 'grid' }}>
-                          <Button disabled={isSubmitting} onClick={submitForm}>
-                            {isSubmitting && <CircularProgress />}
-                            {isSubmitting ? 'Creating Region' : 'New region'}
-                          </Button>
-                        </div>
-                      </Grid>
-                    </Grid>
-                  </Grid>
+              </Grid>
+              <Grid container direction="column">
+                <Grid item>
+                  <Field
+                    name="regName"
+                    component={TextField}
+                    type="text"
+                    label="Libellé Région"
+                    variant="outlined"
+                    disabled={isSubmitting}
+                    helpertext={<ErrorMessage name="regName" />}
+                  />
+                  <Field
+                    name="regCode"
+                    component={TextField}
+                    type="text"
+                    label="Code Région"
+                    variant="outlined"
+                    disabled={isSubmitting}
+                    helpertext={<ErrorMessage name="regCode" />}
+                  />
+                  <Notification notify={notify} setNotify={setNotify} />
+                  <div style={{ placeItems: 'center', display: 'grid' }}>
+                    <Button disabled={isSubmitting} onClick={submitForm}>
+                      {isSubmitting && <CircularProgress />}
+                      {isSubmitting ? 'Creating Region' : 'New region'}
+                    </Button>
+                  </div>
                 </Grid>
               </Grid>
             </Form>

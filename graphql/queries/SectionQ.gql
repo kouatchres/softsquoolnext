@@ -1,5 +1,6 @@
 #import from "../fragments/SectionFragment.gql"
 #import from "../fragments/DepartmentFragment.gql"
+#import from "../fragments/ClassroomFragment.gql"
 
 query AllSections {
   sections {
@@ -12,6 +13,15 @@ query SingleSection($id: String!) {
     ...SectionFragment
     departments {
       ...DepartmentFragment
+    }
+  }
+}
+
+query SingleSectionForClassrooms($id: String!) {
+  sectionForClasses(id: $id) {
+    ...SectionFragment
+    classrooms {
+      ...ClassroomFragment
     }
   }
 }

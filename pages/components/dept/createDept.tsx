@@ -17,8 +17,8 @@ import {
   useCreateDepartmentMutation,
   AllDepartmentsDocument,
   DepartmentCreateInput,
-  SingleSchoolBySecretCodeDocument,
-  useSingleSchoolBySecretCodeLazyQuery
+  SingleSchoolByPublicCodeDocument,
+  useSingleSchoolByPublicCodeLazyQuery
 } from '../../../generated/graphql';
 import { IOptions } from '../interfaces';
 
@@ -45,22 +45,22 @@ const createDept = () => {
   const [sectionID, setSectionID] = useState<string>('');
 
   const [
-    SingleSchoolBySchoolSecretCodeQuery,
+    SingleSchoolBySchoolPublicCodeQuery,
     { data, loading, error }
-  ] = useSingleSchoolBySecretCodeLazyQuery({
-    query: SingleSchoolBySecretCodeDocument
+  ] = useSingleSchoolByPublicCodeLazyQuery({
+    query: SingleSchoolByPublicCodeDocument
   });
 
   console.log({ data });
 
   const { schoolName } =
-    data && data.schoolBySecretCode
-      ? data.schoolBySecretCode
+    data && data.schoolByPublicCode
+      ? data.schoolByPublicCode
       : { schoolName: '' };
 
   const sectionsOptions: IOptions[] =
-    data?.schoolBySecretCode && data?.schoolBySecretCode?.sections
-      ? data?.schoolBySecretCode?.sections?.map(section => ({
+    data?.schoolByPublicCode && data?.schoolByPublicCode?.sections
+      ? data?.schoolByPublicCode?.sections?.map(section => ({
           value: section?.id,
           label: section?.sectionName
         }))
@@ -144,7 +144,16 @@ const createDept = () => {
                 justify="center"
               >
                 <Grid item>
-                  <Grid container direction="row" justify="center">
+                  <Grid
+                    container
+                    direction="row"
+                    justify="center"
+                    style={{
+                      backgroundColor: '#ede6b9',
+                      borderRadius: '0.2rem',
+                      paddingTop: '0.2rem'
+                    }}
+                  >
                     <Grid item>
                       <Typography
                         color="primary"
@@ -173,20 +182,20 @@ const createDept = () => {
                         />
 
                         <Field
-                          name="schoolSecret"
+                          name="schoolPublic"
                           component={TextField}
                           type="text"
-                          label="School secret Code"
+                          label="School Public Code"
                           variant="outlined"
-                          disabled={isSubmitting}
+                          disabled={isSubmitting || loading}
                           onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                            SingleSchoolBySchoolSecretCodeQuery({
+                            SingleSchoolBySchoolPublicCodeQuery({
                               variables: {
-                                schoolSecretCode: event.target.value
+                                schoolPublicCode: event.target.value
                               }
                             });
                           }}
-                          helpertext={<ErrorMessage name="schoolSecret" />}
+                          helpertext={<ErrorMessage name="schoolPublic" />}
                         />
 
                         <Field

@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme: Theme) =>
       paddingLeft: theme.spacing(1.7),
       paddingRight: theme.spacing(1.7),
       paddingBottom: theme.spacing(1.3),
-      maxWidth: '50%',
+      maxWidth: '40%',
       minWidth: '30%'
     }
   })
@@ -55,7 +55,7 @@ const validationSchema = Yup.object().shape({
   email: Yup.string().email('Email invalide').required('Email obligatoire')
 });
 
-const CreateStudent: FC<StudentCreateInput> = () => {
+const studentInfo: FC<StudentCreateInput> = () => {
   const classes = useStyles();
   const theme = useTheme();
   const router = useRouter();
@@ -166,20 +166,30 @@ const CreateStudent: FC<StudentCreateInput> = () => {
           <Paper className={classes.pageStyled}>
             <Form aria-busy={isSubmitting}>
               {isSubmitting && <LinearProgress />}
-              <Grid container direction="row" justify="center">
+              <Grid
+                container
+                direction="row"
+                justify="center"
+                alignItems="center"
+                style={{
+                  paddingTop: '0.2rem',
+                  backgroundColor: '#ede6b9',
+                  borderRadius: '0.2rem'
+                }}
+              >
                 <Grid item>
                   <Typography
                     align={matchesSM ? 'center' : undefined}
                     color="primary"
                     gutterBottom
-                    variant="h6"
-                    component="h5"
+                    variant="body2"
+                    component="h6"
                   >
                     Student Info
                   </Typography>
                 </Grid>
               </Grid>
-              <Grid container spacing={2} direction="row">
+              <Grid container spacing={1} direction="row">
                 <Grid item xs={12} md={6}>
                   <Field
                     helpertext={<ErrorMessage name="student1stName" />}
@@ -290,7 +300,7 @@ const CreateStudent: FC<StudentCreateInput> = () => {
               </Grid>
               <Notification notify={notify} setNotify={setNotify} />
 
-              <Grid container direction="row" spacing={2}>
+              <Grid container direction="row" spacing={1}>
                 <Grid item xs={12}>
                   <div style={{ display: 'grid', placeItems: 'center' }}>
                     <Button disabled={isSubmitting} onClick={submitForm}>
@@ -307,4 +317,4 @@ const CreateStudent: FC<StudentCreateInput> = () => {
     </Formik>
   );
 };
-export default CreateStudent;
+export default studentInfo;
