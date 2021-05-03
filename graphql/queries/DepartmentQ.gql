@@ -1,10 +1,17 @@
 #import from "../fragments/DepartmentFragment.gql"
+#import from "../fragments/SubjectFragment.gql"
 
+query AllDepartments {
+  departments {
+    ...DepartmentFragment
+  }
+}
 
-  query AllDepartments {
-    departments {
-
-      ...DepartmentFragment
+query subjectsOfADept($id: String!) {
+  department(id: $id) {
+    ...DepartmentFragment
+    subjects {
+      ...SubjectFragment
     }
   }
-
+}

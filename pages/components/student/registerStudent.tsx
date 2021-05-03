@@ -11,7 +11,7 @@ import {
 } from '@material-ui/core';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import * as Yup from 'yup';
-import Notification from 'utils/Notification';
+import Notification from '../Notification';
 import {
   SchoolYear,
   SingleStudentByMatriculeDocument,
@@ -89,14 +89,14 @@ const registerStudent = ({ schoolYears }: AllSchoolYearsQuery) => {
   // get one section  and subsequently all its classrooms
   const [
     SingleSectionForClassroomsQuery,
-    { data: dataSection, loading: loadingSection }
+    { data: dataClass, loading: loadingClass }
   ] = useSingleSectionForClassroomsLazyQuery({
     query: SingleSectionForClassroomsDocument
   });
 
   const classroomsOptions: IOptions[] =
-    dataSection?.sectionForClasses && dataSection?.sectionForClasses?.classrooms
-      ? dataSection?.sectionForClasses?.classrooms?.map(classroom => ({
+    dataClass?.sectionForClasses && dataClass?.sectionForClasses?.classrooms
+      ? dataClass?.sectionForClasses?.classrooms?.map(classroom => ({
           value: classroom?.id,
           label: classroom?.className
         }))
@@ -290,7 +290,7 @@ const registerStudent = ({ schoolYears }: AllSchoolYearsQuery) => {
                         options={classroomsOptions}
                         label="Choose classroom"
                         variant="outlined"
-                        disabled={isSubmitting || loadingSection}
+                        disabled={isSubmitting || loadingClass}
                         onChange={(event: ChangeEvent<HTMLInputElement>) => {
                           handleClassroomSelectChange(event);
                         }}

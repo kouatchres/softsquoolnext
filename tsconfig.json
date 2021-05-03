@@ -23,12 +23,12 @@
     "target": "esnext",
     "typeRoots": ["node_modules/@types", "types"],
     "rootDir": ".",
+    "jsx": "preserve",
     "plugins": [
       {
         "name": "nexus/typescript-language-service"
       }
-    ],
-    "jsx": "preserve"
+    ]
   },
 
   "exclude": ["node_modules"],

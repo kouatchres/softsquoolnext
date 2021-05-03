@@ -168,25 +168,30 @@ const CreateProf: FC<ProfCreateInput> = () => {
           <Paper className={classes.pageStyled}>
             <Form aria-busy={isSubmitting}>
               {isSubmitting && <LinearProgress />}
-              <Grid container direction="row" justify="center"  alignItems="center"
+              <Grid
+                container
+                direction="row"
+                justify="center"
+                alignItems="center"
                 style={{
                   backgroundColor: '#ede6b9',
                   borderRadius: '0.2rem',
                   paddingTop: '0.2rem'
-                }}>
+                }}
+              >
                 <Grid item>
                   <Typography
                     align={matchesSM ? 'center' : undefined}
                     color="primary"
                     gutterBottom
-                    variant="h6"
+                    variant="body2"
                     component="h5"
                   >
                     Prof Info
                   </Typography>
                 </Grid>
               </Grid>
-              <Grid container spacing={2} direction="row">
+              <Grid container spacing={1} direction="row">
                 <Grid item xs={12} md={6}>
                   <Field
                     helperText={<ErrorMessage name="prof1stName" />}
@@ -292,7 +297,7 @@ const CreateProf: FC<ProfCreateInput> = () => {
               <Notification notify={notify} setNotify={setNotify} />
 
               <Grid container direction="row">
-                <Grid item xs={12} >
+                <Grid item xs={12}>
                   <div style={{ display: 'grid', placeItems: 'center' }}>
                     <Button disabled={isSubmitting} onClick={submitForm}>
                       {isSubmitting && <CircularProgress />}

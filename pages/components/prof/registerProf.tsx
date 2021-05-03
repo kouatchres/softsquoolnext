@@ -10,10 +10,9 @@ import {
   LinearProgress,
   CircularProgress
 } from '@material-ui/core';
-import SaveIcon from '@material-ui/icons/Save';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import * as Yup from 'yup';
-import Notification from 'utils/Notification';
+import Notification from '../Notification';
 import {
   SchoolYear,
   SingleProfByMatriculeDocument,
@@ -46,10 +45,10 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 const validationSchema = Yup.object().shape({
-  schoolYear: Yup.string().required('No school Year'),
-  sectionID: Yup.string().required('No Section'),
-  departmentID: Yup.string().required('No Dept'),
-  profMatricule: Yup.string().required('No prof Matricule')
+  // schoolYear: Yup.string().required('No school Year'),
+  // sectionID: Yup.string().required('No Section'),
+  // departmentID: Yup.string().required('No Dept'),
+  // profMatricule: Yup.string().required('No prof Matricule')
 });
 
 const registerProf = ({ schoolYears }: AllSchoolYearsQuery) => {

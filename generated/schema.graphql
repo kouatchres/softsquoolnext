@@ -3,7 +3,10 @@
 
 
 type AnnProfDept {
+  departmentId: String!
   id: String!
+  profId: String!
+  schoolYearId: String!
 }
 
 input AnnProfDeptCreateInput {
@@ -287,7 +290,10 @@ input AnnProfDeptWhereUniqueInput {
 }
 
 type AnnProfSubjDistro {
+  annProfDeptId: String!
+  classroomId: String!
   id: String!
+  subjectId: String!
 }
 
 input AnnProfSubjDistroCreateInput {
@@ -1196,11 +1202,11 @@ input DateTimeFilter {
 }
 
 type Department {
-  annProfDept: [AnnProfDept]
+  annProfDepts: [AnnProfDept]
   deptCode: String!
   deptName: String!
   id: String!
-  subject: [Subject]
+  subjects: [Subject]
 }
 
 input DepartmentCreateInput {
@@ -2140,6 +2146,7 @@ type Query {
   towns: [Town]
   user(id: String): User
   users: [User]
+  yearlyProfDept(departmentId: String, profId: String, schoolYearId: String): [AnnProfDept]
 }
 
 enum QueryMode {

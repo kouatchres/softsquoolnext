@@ -259,7 +259,7 @@ const SygefexTheme = createMuiTheme({
     },
     MuiGrid: {
       root: {
-        marginBottom: '0.2rem'
+        marginBottom: '0.3rem'
       }
       // container: {
       //   alignItems: 'center',
@@ -312,12 +312,13 @@ const SygefexTheme = createMuiTheme({
         color: `${sygefexBackground}`,
         backgroundColor: `${sygefexGreen}`,
         textTransform: 'none',
-        marginBottom: '0.5rem',
+        marginBottom: '0.3rem',
         marginTop: '0.1rem',
-        fontSize: '0.8rem',
+        fontSize: '0.7rem',
         fontWeight: 200,
         padding: '.1rem',
         borderRadius: '0.3rem',
+        size: 'medium',
         fontFamily: 'Comic Sans MS',
         variant: 'outlined',
         '&:hover': {

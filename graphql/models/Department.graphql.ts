@@ -7,7 +7,7 @@ export const Department = objectType({
     t.model.id('id');
     t.model.deptName();
     t.model.deptCode();
-    t.list.field('annProfDept', {
+    t.list.field('annProfDepts', {
       type: 'AnnProfDept',
       resolve: async (parent, _, { prisma }) => {
         return await prisma.department
@@ -17,7 +17,7 @@ export const Department = objectType({
           .annProfDept();
       }
     });
-    t.list.field('subject', {
+    t.list.field('subjects', {
       type: 'Subject',
       resolve: async (parent, _, { prisma }) => {
         return await prisma.department

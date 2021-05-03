@@ -20,8 +20,8 @@ import {
   useCreateSubjectMutation,
   AllSubjectsDocument,
   SubjectCreateInput,
-  SingleSchoolBySecretCodeDocument,
-  useSingleSchoolBySecretCodeLazyQuery
+  SingleSchoolByPublicCodeDocument,
+  useSingleSchoolByPublicCodeLazyQuery
 } from '../../../generated/graphql';
 import { IOptions } from '../interfaces';
 
@@ -48,21 +48,21 @@ const NewSubject = () => {
   const [departmentID, setDepartmentID] = useState<string>('');
 
   const [
-    SingleSchoolBySchoolSecretCodeQuery,
+    SingleSchoolBySchoolPublicCodeQuery,
     { data }
-  ] = useSingleSchoolBySecretCodeLazyQuery({
-    query: SingleSchoolBySecretCodeDocument
+  ] = useSingleSchoolByPublicCodeLazyQuery({
+    query: SingleSchoolByPublicCodeDocument
   });
 
   const { schoolName, id } =
-    data && data.schoolBySecretCode
-      ? data.schoolBySecretCode
+    data && data.schoolByPublicCode
+      ? data.schoolByPublicCode
       : { schoolName: '', id: '' };
   console.log({ data });
 
   const sectionsOptions: IOptions[] =
-    data?.schoolBySecretCode && data?.schoolBySecretCode?.sections
-      ? data?.schoolBySecretCode?.sections?.map(section => ({
+    data?.schoolByPublicCode && data?.schoolByPublicCode?.sections
+      ? data?.schoolByPublicCode?.sections?.map(section => ({
           value: section?.id,
           label: section?.sectionName
         }))
@@ -152,128 +152,114 @@ const NewSubject = () => {
           <Paper className={classes.pageStyled}>
             <Form aria-busy={isSubmitting}>
               {isSubmitting && <LinearProgress />}
+
               <Grid
-                direction="column"
                 container
-                alignItems="center"
+                direction="row"
                 justify="center"
+                alignItems="center"
+                style={{
+                  paddingTop: '0.2rem',
+                  backgroundColor: '#ede6b9',
+                  borderRadius: '0.2rem'
+                }}
               >
                 <Grid item>
-                  <Grid
-                    container
-                    direction="row"
-                    justify="center"
-                    alignItems="center"
-                    style={{
-                      paddingTop: '0.2rem',
-                      backgroundColor: '#ede6b9',
-                      borderRadius: '0.2rem'
-                    }}
+                  <Typography
+                    color="primary"
+                    gutterBottom
+                    variant="body2"
+                    component="h6"
                   >
-                    <Grid item>
-                      <Typography
-                        color="primary"
-                        gutterBottom
-                        variant="body2"
-                        component="h6"
-                      >
-                        New subject
-                      </Typography>
-                    </Grid>
-                  </Grid>
+                    New subject
+                  </Typography>
                 </Grid>
-                <Grid container spacing={5} direction="row">
-                  <Grid item sm={12}>
-                    <Grid container direction="column">
-                      <Grid item>
-                        <Field
-                          name="sectionName"
-                          component={TextField}
-                          type="text"
-                          value={schoolName || ''}
-                          label="Nom de l'etablissement"
-                          variant="outlined"
-                          disabled
-                          helpertext={<ErrorMessage name="sectionName" />}
-                        />
+              </Grid>
+              <Grid container direction="column">
+                <Grid item>
+                  <Field
+                    name="sectionName"
+                    component={TextField}
+                    type="text"
+                    value={schoolName || ''}
+                    label="Nom de l'etablissement"
+                    variant="outlined"
+                    disabled
+                    helpertext={<ErrorMessage name="sectionName" />}
+                  />
 
-                        <Field
-                          name="schoolSecret"
-                          component={TextField}
-                          type="text"
-                          label="School secret Code"
-                          variant="outlined"
-                          disabled={isSubmitting}
-                          onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                            SingleSchoolBySchoolSecretCodeQuery({
-                              variables: {
-                                schoolSecretCode: event.target.value
-                              }
-                            });
-                          }}
-                          helpertext={<ErrorMessage name="schoolSecret" />}
-                        />
+                  <Field
+                    name="schoolPublic"
+                    component={TextField}
+                    type="text"
+                    label="School secret Code"
+                    variant="outlined"
+                    disabled={isSubmitting}
+                    onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                      SingleSchoolBySchoolPublicCodeQuery({
+                        variables: {
+                          schoolPublicCode: event.target.value
+                        }
+                      });
+                    }}
+                    helpertext={<ErrorMessage name="schoolPublic" />}
+                  />
 
-                        <Field
-                          name="sectionID"
-                          component={Select}
-                          type="text"
-                          autoFocus={true}
-                          options={sectionsOptions}
-                          label="Choix de section"
-                          variant="outlined"
-                          disabled={isSubmitting || !data}
-                          onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                            SingleSectionQuery({
-                              variables: { id: event.target.value }
-                            });
-                          }}
-                          helpertext={<ErrorMessage name="sectionID" />}
-                        />
-                        <Field
-                          name="departmentID"
-                          component={Select}
-                          type="text"
-                          autoFocus={true}
-                          options={deptsOptions}
-                          label="Choose department"
-                          variant="outlined"
-                          disabled={
-                            isSubmitting || loadingSection || !dataSection
-                          }
-                          onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                            handleSelectChange(event);
-                          }}
-                          helpertext={<ErrorMessage name="departmentID" />}
-                        />
-                        <Field
-                          name="subjectName"
-                          component={TextField}
-                          type="text"
-                          label="Libellé Subject"
-                          variant="outlined"
-                          disabled={isSubmitting}
-                          helpertext={<ErrorMessage name="subjectName" />}
-                        />
-                        <Field
-                          name="subjectCode"
-                          component={TextField}
-                          type="text"
-                          label="Code Subject"
-                          variant="outlined"
-                          disabled={isSubmitting}
-                          helpertext={<ErrorMessage name="subjectCode" />}
-                        />
-                        <Notification notify={notify} setNotify={setNotify} />
-                        <div style={{ placeItems: 'center', display: 'grid' }}>
-                          <Button disabled={isSubmitting} onClick={submitForm}>
-                            {isSubmitting && <CircularProgress />}
-                            {isSubmitting ? 'Creating Subject' : 'New subject'}
-                          </Button>
-                        </div>
-                      </Grid>
-                    </Grid>
-                  </Grid>
+                  <Field
+                    name="sectionID"
+                    component={Select}
+                    type="text"
+                    autoFocus={true}
+                    options={sectionsOptions}
+                    label="Choix de section"
+                    variant="outlined"
+                    disabled={isSubmitting || !data}
+                    onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                      SingleSectionQuery({
+                        variables: { id: event.target.value }
+                      });
+                    }}
+                    helpertext={<ErrorMessage name="sectionID" />}
+                  />
+                  <Field
+                    name="departmentID"
+                    component={Select}
+                    type="text"
+                    autoFocus={true}
+                    options={deptsOptions}
+                    label="Choose department"
+                    variant="outlined"
+                    disabled={isSubmitting || loadingSection || !dataSection}
+                    onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                      handleSelectChange(event);
+                    }}
+                    helpertext={<ErrorMessage name="departmentID" />}
+                  />
+                  <Field
+                    name="subjectName"
+                    component={TextField}
+                    type="text"
+                    label="Libellé Subject"
+                    variant="outlined"
+                    disabled={isSubmitting}
+                    helpertext={<ErrorMessage name="subjectName" />}
+                  />
+                  <Field
+                    name="subjectCode"
+                    component={TextField}
+                    type="text"
+                    label="Code Subject"
+                    variant="outlined"
+                    disabled={isSubmitting}
+                    helpertext={<ErrorMessage name="subjectCode" />}
+                  />
+                  <Notification notify={notify} setNotify={setNotify} />
+                  <div style={{ placeItems: 'center', display: 'grid' }}>
+                    <Button disabled={isSubmitting} onClick={submitForm}>
+                      {isSubmitting && <CircularProgress />}
+                      {isSubmitting ? 'Creating Subject' : 'New subject'}
+                    </Button>
+                  </div>
                 </Grid>
               </Grid>
             </Form>

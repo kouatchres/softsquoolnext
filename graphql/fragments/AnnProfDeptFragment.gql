@@ -1,3 +1,6 @@
 fragment AnnProfDeptFragment on AnnProfDept {
   id
+  schoolYearId
+  departmentId
+  profId
 }

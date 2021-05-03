@@ -3275,10 +3275,16 @@ export interface NexusGenScalars {
 
 export interface NexusGenRootTypes {
   AnnProfDept: { // root type
+    departmentId: string; // String!
     id: string; // String!
+    profId: string; // String!
+    schoolYearId: string; // String!
   }
   AnnProfSubjDistro: { // root type
+    annProfDeptId: string; // String!
+    classroomId: string; // String!
     id: string; // String!
+    subjectId: string; // String!
   }
   AnnStudentClassroom: { // root type
     id: string; // String!
@@ -3864,10 +3870,16 @@ export interface NexusGenAllTypes extends NexusGenRootTypes {
 
 export interface NexusGenFieldTypes {
   AnnProfDept: { // field return type
+    departmentId: string; // String!
     id: string; // String!
+    profId: string; // String!
+    schoolYearId: string; // String!
   }
   AnnProfSubjDistro: { // field return type
+    annProfDeptId: string; // String!
+    classroomId: string; // String!
     id: string; // String!
+    subjectId: string; // String!
   }
   AnnStudentClassroom: { // field return type
     id: string; // String!
@@ -3882,11 +3894,11 @@ export interface NexusGenFieldTypes {
     id: string; // String!
   }
   Department: { // field return type
-    annProfDept: Array<NexusGenRootTypes['AnnProfDept'] | null> | null; // [AnnProfDept]
+    annProfDepts: Array<NexusGenRootTypes['AnnProfDept'] | null> | null; // [AnnProfDept]
     deptCode: string; // String!
     deptName: string; // String!
     id: string; // String!
-    subject: Array<NexusGenRootTypes['Subject'] | null> | null; // [Subject]
+    subjects: Array<NexusGenRootTypes['Subject'] | null> | null; // [Subject]
   }
   Division: { // field return type
     divisionCode: string; // String!
@@ -4041,6 +4053,7 @@ export interface NexusGenFieldTypes {
     towns: Array<NexusGenRootTypes['Town'] | null> | null; // [Town]
     user: NexusGenRootTypes['User'] | null; // User
     users: Array<NexusGenRootTypes['User'] | null> | null; // [User]
+    yearlyProfDept: Array<NexusGenRootTypes['AnnProfDept'] | null> | null; // [AnnProfDept]
   }
   Region: { // field return type
     divisions: Array<NexusGenRootTypes['Division'] | null> | null; // [Division]
@@ -4126,10 +4139,16 @@ export interface NexusGenFieldTypes {
 
 export interface NexusGenFieldTypeNames {
   AnnProfDept: { // field return type name
+    departmentId: 'String'
     id: 'String'
+    profId: 'String'
+    schoolYearId: 'String'
   }
   AnnProfSubjDistro: { // field return type name
+    annProfDeptId: 'String'
+    classroomId: 'String'
     id: 'String'
+    subjectId: 'String'
   }
   AnnStudentClassroom: { // field return type name
     id: 'String'
@@ -4144,11 +4163,11 @@ export interface NexusGenFieldTypeNames {
     id: 'String'
   }
   Department: { // field return type name
-    annProfDept: 'AnnProfDept'
+    annProfDepts: 'AnnProfDept'
     deptCode: 'String'
     deptName: 'String'
     id: 'String'
-    subject: 'Subject'
+    subjects: 'Subject'
   }
   Division: { // field return type name
     divisionCode: 'String'
@@ -4303,6 +4322,7 @@ export interface NexusGenFieldTypeNames {
     towns: 'Town'
     user: 'User'
     users: 'User'
+    yearlyProfDept: 'AnnProfDept'
   }
   Region: { // field return type name
     divisions: 'Division'
@@ -4729,6 +4749,11 @@ export interface NexusGenArgTypes {
     }
     user: { // args
       id?: string | null; // String
+    }
+    yearlyProfDept: { // args
+      departmentId?: string | null; // String
+      profId?: string | null; // String
+      schoolYearId?: string | null; // String
     }
   }
 }

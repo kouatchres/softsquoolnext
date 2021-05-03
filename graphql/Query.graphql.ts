@@ -125,7 +125,7 @@ const Query = queryType({
       type: 'Department',
       resolve: async (_parent, _args, { prisma }) => {
         return await prisma.department.findMany({
-          orderBy: [{ departmentName: 'asc' }, { departmentCode: 'asc' }]
+          orderBy: [{ deptName: 'asc' }, { deptCode: 'asc' }]
         });
       }
     });
@@ -208,7 +208,6 @@ const Query = queryType({
       }
     });
 
-
     t.field('sectionForClasses', {
       type: 'Section',
       args: {
@@ -219,14 +218,33 @@ const Query = queryType({
       }
     });
 
-
-
-
     t.list.field('annProfDepts', {
       type: 'AnnProfDept',
       resolve: async (_parent, _args, { prisma }) => {
         return await prisma.annProfDept.findMany({
           orderBy: [{ id: 'asc' }]
+        });
+      }
+    });
+
+    t.list.field('yearlyProfDept', {
+      type: 'AnnProfDept',
+      args: {
+        profId: stringArg(),
+        departmentId: stringArg(),
+        schoolYearId: stringArg()
+      },
+      resolve: async (
+        _parent,
+        { profId, departmentId, schoolYearId },
+        { prisma }
+      ) => {
+        return await prisma.annProfDept.findMany({
+          where: {
+            profId: String(profId),
+            departmentId: String(departmentId),
+            schoolYearId: String(schoolYearId)
+          }
         });
       }
     });

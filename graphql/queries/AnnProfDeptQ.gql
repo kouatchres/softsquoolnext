@@ -1,10 +1,13 @@
 #import from "../fragments/AnnProfDeptFragment.gql"
 
-
-  query AllAnnProfDepts {
-    annProfDepts {
-
-      ...AnnProfDeptFragment
-    }
+query AllAnnProfDepts {
+  annProfDepts {
+    ...AnnProfDeptFragment
   }
+}
 
+query SingleAnnProfDept($profId: String!, $departmentId:String!, $schoolYearId: String!) {
+  yearlyProfDept(profId: $profId, departmentId: $departmentId, schoolYearId:$schoolYearId) {
+    ...AnnProfDeptFragment
+  }
+}

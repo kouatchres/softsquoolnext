@@ -78,8 +78,8 @@ export type Department = {
   id: Scalars['String'];
   deptName: Scalars['String'];
   deptCode: Scalars['String'];
-  annProfDept?: Maybe<Array<Maybe<AnnProfDept>>>;
-  subject?: Maybe<Array<Maybe<Subject>>>;
+  annProfDepts?: Maybe<Array<Maybe<AnnProfDept>>>;
+  subjects?: Maybe<Array<Maybe<Subject>>>;
 };
 
 export type Prof = {
@@ -105,10 +105,16 @@ export type Sequence = {
 
 export type AnnProfDept = {
   id: Scalars['String'];
+  schoolYearId: Scalars['String'];
+  profId: Scalars['String'];
+  departmentId: Scalars['String'];
 };
 
 export type AnnProfSubjDistro = {
   id: Scalars['String'];
+  annProfDeptId: Scalars['String'];
+  classroomId: Scalars['String'];
+  subjectId: Scalars['String'];
 };
 
 export type AnnStudentClassroom = {
@@ -192,6 +198,7 @@ export type Query = {
   section?: Maybe<Section>;
   sectionForClasses?: Maybe<Section>;
   annProfDepts?: Maybe<Array<Maybe<AnnProfDept>>>;
+  yearlyProfDept?: Maybe<Array<Maybe<AnnProfDept>>>;
   annProfDept?: Maybe<AnnProfDept>;
   annProfSubjDistros?: Maybe<Array<Maybe<AnnProfSubjDistro>>>;
   annProfSubjDistro?: Maybe<AnnProfSubjDistro>;
@@ -280,6 +287,13 @@ export type QuerySectionArgs = {
 
 export type QuerySectionForClassesArgs = {
   id?: Maybe<Scalars['String']>;
+};
+
+
+export type QueryYearlyProfDeptArgs = {
+  profId?: Maybe<Scalars['String']>;
+  departmentId?: Maybe<Scalars['String']>;
+  schoolYearId?: Maybe<Scalars['String']>;
 };
 
 
@@ -4559,9 +4573,9 @@ export type NestedStringNullableFilter = {
   not?: Maybe<NestedStringNullableFilter>;
 };
 
-export type AnnProfDeptFragmentFragment = Pick<AnnProfDept, 'id'>;
+export type AnnProfDeptFragmentFragment = Pick<AnnProfDept, 'id' | 'schoolYearId' | 'departmentId' | 'profId'>;
 
-export type AnnProfSubjDistroFragmentFragment = Pick<AnnProfSubjDistro, 'id'>;
+export type AnnProfSubjDistroFragmentFragment = Pick<AnnProfSubjDistro, 'id' | 'annProfDeptId' | 'subjectId' | 'classroomId'>;
 
 export type AnnStudentClassroomFragmentFragment = Pick<AnnStudentClassroom, 'id'>;
 
@@ -4889,6 +4903,15 @@ export type AllAnnProfDeptsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type AllAnnProfDeptsQuery = { annProfDepts?: Maybe<Array<Maybe<AnnProfDeptFragmentFragment>>> };
 
+export type SingleAnnProfDeptQueryVariables = Exact<{
+  profId: Scalars['String'];
+  departmentId: Scalars['String'];
+  schoolYearId: Scalars['String'];
+}>;
+
+
+export type SingleAnnProfDeptQuery = { yearlyProfDept?: Maybe<Array<Maybe<AnnProfDeptFragmentFragment>>> };
+
 export type AllAnnProfSubjDistrosQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -4908,6 +4931,16 @@ export type AllDepartmentsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type AllDepartmentsQuery = { departments?: Maybe<Array<Maybe<DepartmentFragmentFragment>>> };
+
+export type SubjectsOfADeptQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type SubjectsOfADeptQuery = { department?: Maybe<(
+    { subjects?: Maybe<Array<Maybe<SubjectFragmentFragment>>> }
+    & DepartmentFragmentFragment
+  )> };
 
 export type AllDivisionsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -5101,11 +5134,17 @@ export type AllUsersQuery = { users?: Maybe<Array<Maybe<UserFragmentFragment>>> 
 export const AnnProfDeptFragmentFragmentDoc = gql`
     fragment AnnProfDeptFragment on AnnProfDept {
   id
+  schoolYearId
+  departmentId
+  profId
 }
     `;
 export const AnnProfSubjDistroFragmentFragmentDoc = gql`
     fragment AnnProfSubjDistroFragment on AnnProfSubjDistro {
   id
+  annProfDeptId
+  subjectId
+  classroomId
 }
     `;
 export const AnnStudentClassroomFragmentFragmentDoc = gql`
@@ -7396,6 +7435,66 @@ export function useAllAnnProfDeptsLazyQuery(baseOptions?: ApolloReactHooks.LazyQ
 export type AllAnnProfDeptsQueryHookResult = ReturnType<typeof useAllAnnProfDeptsQuery>;
 export type AllAnnProfDeptsLazyQueryHookResult = ReturnType<typeof useAllAnnProfDeptsLazyQuery>;
 export type AllAnnProfDeptsQueryResult = Apollo.QueryResult<AllAnnProfDeptsQuery, AllAnnProfDeptsQueryVariables>;
+export const SingleAnnProfDeptDocument = gql`
+    query SingleAnnProfDept($profId: String!, $departmentId: String!, $schoolYearId: String!) {
+  yearlyProfDept(
+    profId: $profId
+    departmentId: $departmentId
+    schoolYearId: $schoolYearId
+  ) {
+    ...AnnProfDeptFragment
+  }
+}
+    ${AnnProfDeptFragmentFragmentDoc}`;
+export type SingleAnnProfDeptComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<SingleAnnProfDeptQuery, SingleAnnProfDeptQueryVariables>, 'query'> & ({ variables: SingleAnnProfDeptQueryVariables; skip?: boolean; } | { skip: boolean; });
+
+    export const SingleAnnProfDeptComponent = (props: SingleAnnProfDeptComponentProps) => (
+      <ApolloReactComponents.Query<SingleAnnProfDeptQuery, SingleAnnProfDeptQueryVariables> query={SingleAnnProfDeptDocument} {...props} />
+    );
+    
+export type SingleAnnProfDeptProps<TChildProps = {}, TDataName extends string = 'data'> = {
+      [key in TDataName]: ApolloReactHoc.DataValue<SingleAnnProfDeptQuery, SingleAnnProfDeptQueryVariables>
+    } & TChildProps;
+export function withSingleAnnProfDept<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  SingleAnnProfDeptQuery,
+  SingleAnnProfDeptQueryVariables,
+  SingleAnnProfDeptProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withQuery<TProps, SingleAnnProfDeptQuery, SingleAnnProfDeptQueryVariables, SingleAnnProfDeptProps<TChildProps, TDataName>>(SingleAnnProfDeptDocument, {
+      alias: 'singleAnnProfDept',
+      ...operationOptions
+    });
+};
+
+/**
+ * __useSingleAnnProfDeptQuery__
+ *
+ * To run a query within a React component, call `useSingleAnnProfDeptQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSingleAnnProfDeptQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSingleAnnProfDeptQuery({
+ *   variables: {
+ *      profId: // value for 'profId'
+ *      departmentId: // value for 'departmentId'
+ *      schoolYearId: // value for 'schoolYearId'
+ *   },
+ * });
+ */
+export function useSingleAnnProfDeptQuery(baseOptions: ApolloReactHooks.QueryHookOptions<SingleAnnProfDeptQuery, SingleAnnProfDeptQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<SingleAnnProfDeptQuery, SingleAnnProfDeptQueryVariables>(SingleAnnProfDeptDocument, options);
+      }
+export function useSingleAnnProfDeptLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<SingleAnnProfDeptQuery, SingleAnnProfDeptQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<SingleAnnProfDeptQuery, SingleAnnProfDeptQueryVariables>(SingleAnnProfDeptDocument, options);
+        }
+export type SingleAnnProfDeptQueryHookResult = ReturnType<typeof useSingleAnnProfDeptQuery>;
+export type SingleAnnProfDeptLazyQueryHookResult = ReturnType<typeof useSingleAnnProfDeptLazyQuery>;
+export type SingleAnnProfDeptQueryResult = Apollo.QueryResult<SingleAnnProfDeptQuery, SingleAnnProfDeptQueryVariables>;
 export const AllAnnProfSubjDistrosDocument = gql`
     query AllAnnProfSubjDistros {
   annProfSubjDistros {
@@ -7608,6 +7707,64 @@ export function useAllDepartmentsLazyQuery(baseOptions?: ApolloReactHooks.LazyQu
 export type AllDepartmentsQueryHookResult = ReturnType<typeof useAllDepartmentsQuery>;
 export type AllDepartmentsLazyQueryHookResult = ReturnType<typeof useAllDepartmentsLazyQuery>;
 export type AllDepartmentsQueryResult = Apollo.QueryResult<AllDepartmentsQuery, AllDepartmentsQueryVariables>;
+export const SubjectsOfADeptDocument = gql`
+    query subjectsOfADept($id: String!) {
+  department(id: $id) {
+    ...DepartmentFragment
+    subjects {
+      ...SubjectFragment
+    }
+  }
+}
+    ${DepartmentFragmentFragmentDoc}
+${SubjectFragmentFragmentDoc}`;
+export type SubjectsOfADeptComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<SubjectsOfADeptQuery, SubjectsOfADeptQueryVariables>, 'query'> & ({ variables: SubjectsOfADeptQueryVariables; skip?: boolean; } | { skip: boolean; });
+
+    export const SubjectsOfADeptComponent = (props: SubjectsOfADeptComponentProps) => (
+      <ApolloReactComponents.Query<SubjectsOfADeptQuery, SubjectsOfADeptQueryVariables> query={SubjectsOfADeptDocument} {...props} />
+    );
+    
+export type SubjectsOfADeptProps<TChildProps = {}, TDataName extends string = 'data'> = {
+      [key in TDataName]: ApolloReactHoc.DataValue<SubjectsOfADeptQuery, SubjectsOfADeptQueryVariables>
+    } & TChildProps;
+export function withSubjectsOfADept<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  SubjectsOfADeptQuery,
+  SubjectsOfADeptQueryVariables,
+  SubjectsOfADeptProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withQuery<TProps, SubjectsOfADeptQuery, SubjectsOfADeptQueryVariables, SubjectsOfADeptProps<TChildProps, TDataName>>(SubjectsOfADeptDocument, {
+      alias: 'subjectsOfADept',
+      ...operationOptions
+    });
+};
+
+/**
+ * __useSubjectsOfADeptQuery__
+ *
+ * To run a query within a React component, call `useSubjectsOfADeptQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSubjectsOfADeptQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSubjectsOfADeptQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useSubjectsOfADeptQuery(baseOptions: ApolloReactHooks.QueryHookOptions<SubjectsOfADeptQuery, SubjectsOfADeptQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<SubjectsOfADeptQuery, SubjectsOfADeptQueryVariables>(SubjectsOfADeptDocument, options);
+      }
+export function useSubjectsOfADeptLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<SubjectsOfADeptQuery, SubjectsOfADeptQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<SubjectsOfADeptQuery, SubjectsOfADeptQueryVariables>(SubjectsOfADeptDocument, options);
+        }
+export type SubjectsOfADeptQueryHookResult = ReturnType<typeof useSubjectsOfADeptQuery>;
+export type SubjectsOfADeptLazyQueryHookResult = ReturnType<typeof useSubjectsOfADeptLazyQuery>;
+export type SubjectsOfADeptQueryResult = Apollo.QueryResult<SubjectsOfADeptQuery, SubjectsOfADeptQueryVariables>;
 export const AllDivisionsDocument = gql`
     query AllDivisions {
   divisions {
@@ -10207,8 +10364,8 @@ export type DepartmentResolvers<ContextType = any, ParentType extends ResolversP
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   deptName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   deptCode?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  annProfDept?: Resolver<Maybe<Array<Maybe<ResolversTypes['AnnProfDept']>>>, ParentType, ContextType>;
-  subject?: Resolver<Maybe<Array<Maybe<ResolversTypes['Subject']>>>, ParentType, ContextType>;
+  annProfDepts?: Resolver<Maybe<Array<Maybe<ResolversTypes['AnnProfDept']>>>, ParentType, ContextType>;
+  subjects?: Resolver<Maybe<Array<Maybe<ResolversTypes['Subject']>>>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -10237,11 +10394,17 @@ export type SequenceResolvers<ContextType = any, ParentType extends ResolversPar
 
 export type AnnProfDeptResolvers<ContextType = any, ParentType extends ResolversParentTypes['AnnProfDept'] = ResolversParentTypes['AnnProfDept']> = {
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  schoolYearId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  profId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  departmentId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type AnnProfSubjDistroResolvers<ContextType = any, ParentType extends ResolversParentTypes['AnnProfSubjDistro'] = ResolversParentTypes['AnnProfSubjDistro']> = {
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  annProfDeptId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  classroomId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  subjectId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -10334,6 +10497,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   section?: Resolver<Maybe<ResolversTypes['Section']>, ParentType, ContextType, RequireFields<QuerySectionArgs, never>>;
   sectionForClasses?: Resolver<Maybe<ResolversTypes['Section']>, ParentType, ContextType, RequireFields<QuerySectionForClassesArgs, never>>;
   annProfDepts?: Resolver<Maybe<Array<Maybe<ResolversTypes['AnnProfDept']>>>, ParentType, ContextType>;
+  yearlyProfDept?: Resolver<Maybe<Array<Maybe<ResolversTypes['AnnProfDept']>>>, ParentType, ContextType, RequireFields<QueryYearlyProfDeptArgs, never>>;
   annProfDept?: Resolver<Maybe<ResolversTypes['AnnProfDept']>, ParentType, ContextType, RequireFields<QueryAnnProfDeptArgs, never>>;
   annProfSubjDistros?: Resolver<Maybe<Array<Maybe<ResolversTypes['AnnProfSubjDistro']>>>, ParentType, ContextType>;
   annProfSubjDistro?: Resolver<Maybe<ResolversTypes['AnnProfSubjDistro']>, ParentType, ContextType, RequireFields<QueryAnnProfSubjDistroArgs, never>>;

@@ -1,3 +1,6 @@
 fragment AnnProfSubjDistroFragment on AnnProfSubjDistro {
   id
+  annProfDeptId
+  subjectId
+  classroomId
 }
